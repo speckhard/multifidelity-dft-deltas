@@ -1,0 +1,20 @@
+#=======================================================
+# FHI-aims file: /scratch-emmy/projects/bep00098/aflow_binaries_vibes_3000_4220/pbe/light/minimal/atomic_zora/2/O4Si2_ICSD_92550/relaxation/geometry.in.next_step
+# Created using the Atomic Simulation Environment (ASE)
+# Wed Mar 27 16:58:32 2024
+
+# Additional information:
+#  Relaxed with BFGS, fmax=1.000 meV/AA
+#  nsteps = 9
+#  residual force  = 0.009174 meV/AA
+#  residual stress = 0.141037 meV/AA
+#=======================================================
+lattice_vector 4.4089142398709997 0.0000000000000000 0.0000000000000000 
+lattice_vector 0.0000000000000000 4.4089142398709997 0.0000000000000000 
+lattice_vector 0.0000000000000000 0.0000000000000000 2.9324594229129999 
+atom_frac 0.3060224227250000 0.3060224227250000 0.0000000000000000 O
+atom_frac 0.6939775772750000 0.6939775772750000 0.0000000000000000 O
+atom_frac 0.1939775772750000 0.8060224227249999 0.5000000000000000 O
+atom_frac 0.8060224227249999 0.1939775772750000 0.5000000000000000 O
+atom_frac 0.0000000000000000 0.0000000000000000 0.0000000000000000 Si
+atom_frac 0.4999999999999999 0.4999999999999999 0.5000000000000000 Si

@@ -1,0 +1,40 @@
+#===============================================================================
+# FHI-aims file: tests/data/test/pbe/light/minimal/atomic_zora/4/RhSi_ICSD_988/control.in
+# Created using the Atomic Simulation Environment (ASE)
+# Fri Oct 28 15:09:26 2022
+#===============================================================================
+sc_accuracy_rho                    1e-05
+sc_accuracy_eev                    1e-05
+sc_accuracy_etot                   1e-05
+sc_iter_limit                      8000
+occupation_type                    fermi 0.1
+spin                               none
+charge                             0.0
+mixer                              pulay
+n_max_pulay                        10
+charge_mix_param                   0.01
+preconditioner                     kerker 1.5
+override_relativity                .true.
+override_illconditioning           .true.
+dos_kgrid_factors                  3 3 3
+input_geometry_source              ICSD
+output                             atom_proj_dos -20 10 1000 0.01
+output                             dos -20 10 1000 0.01
+output                             quadrupole
+output                             hirshfeld
+output                             band 0.0 0.0 0.0 0.0 0.5 0.0 20 \Gamma X
+output                             band 0.0 0.5 0.0 0.5 0.5 0.0 20 X M
+output                             band 0.5 0.5 0.0 0.0 0.0 0.0 20 M \Gamma
+output                             band 0.0 0.0 0.0 0.5 0.5 0.5 20 \Gamma R
+output                             band 0.5 0.5 0.5 0.0 0.5 0.0 20 R X
+output                             band 0.5 0.5 0.0 0.5 0.5 0.5 20 M R
+k_grid                             26 26 26
+occupation_acc                     1e-08
+compensate_multipole_errors        .false.
+xc                                 pbe
+relativistic                       atomic_zora scalar
+sc_accuracy_forces                 0.0001
+compute_forces                     .true.
+compute_analytical_stress          .true.
+#===============================================================================
+

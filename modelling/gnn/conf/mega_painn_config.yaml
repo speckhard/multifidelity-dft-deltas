@@ -1,0 +1,40 @@
+# conf/mega_painn_config.yaml
+# Configuration for MegaPaiNN surrogate (Phase 2: Active Learning)
+
+defaults:
+  - _self_
+
+# --- WandB Settings ---
+wandb_project: "mega-painn-surrogate"
+wandb_group: "aflow_training"
+job_name: "mega_painn_run"
+
+# --- Paths ---
+data_file: "data/aflow_processed.pt"
+
+# --- Model Architecture ---
+model:
+  num_layers: 5
+  hidden_dim: 256
+  num_rbf: 20
+  cutoff: 5.0
+  max_z: 120
+  embedding_dim: 128
+  num_precision_settings: 13  # 12-dim bp one-hot + 1 k-density scalar (bp=11 fix)
+  use_film: false           # No fidelity variation in AFLOW-only data
+
+# --- Training Hyperparameters ---
+training:
+  epochs: 300
+  batch_size: 128
+  learning_rate: 1e-3
+  weight_decay: 1e-5
+  loss_function: mse
+  scheduler: cosine
+  warmup_epochs: 10
+  early_stopping_patience: 30
+
+# --- Loss Weights ---
+weights:
+  formation_energy: 1.0
+  bandgap: 1.0

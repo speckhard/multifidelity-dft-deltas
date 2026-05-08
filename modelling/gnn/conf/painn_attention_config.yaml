@@ -1,0 +1,43 @@
+# conf/painn_attention_config.yaml
+# Config for PaiNN + Attention (edge attention + FiLM + attention pooling).
+# No denoising by default (delta_r: 0).
+
+defaults:
+  - _self_
+
+model_type: "painn_attention"
+
+# --- WandB Settings ---
+wandb_project: "painn-attention-ablation"
+wandb_group: "default_experiment"
+
+# --- Paths ---
+data_file: "/u/dansp/egnn/relaxation_data_with_kpoints/data/delta_combined_relaxations_23_51__25_1_2026_egnn_data.pt"
+job_name: "painn_attention_run"
+
+# --- Model Architecture ---
+model:
+  num_layers: 3
+  hidden_dim: 128
+  max_z: 120
+  num_cheap_dft_inputs: 12
+  num_precision_settings: 12
+  num_geo_inputs: 7
+  num_rbf: 20
+  cutoff: 5.0
+  use_film: true
+
+# --- Training Hyperparameters ---
+training:
+  epochs: 800
+  batch_size: 32
+  learning_rate: 1e-4
+  loss_function: "nll"
+
+# --- Loss Weights ---
+weights:
+  delta_e: 1.0
+  delta_gap: 1.0
+  delta_r: 1.0
+  delta_vol: 1.0
+  delta_lat: 1.0

@@ -1,0 +1,39 @@
+# conf/attention_config.yaml
+# Config for the DeltaAttentionGNN model.
+# Same inputs as DeltaGNN but with attention in message passing and pooling.
+
+defaults:
+  - _self_
+
+# --- Model Type ---
+model_type: "attention"
+
+# --- WandB Settings ---
+wandb_project: "egnn-attention"
+wandb_group: "default_experiment"
+
+# --- Paths ---
+data_file: "/u/dansp/egnn/relaxation_data_with_kpoints/data/delta_combined_relaxations_11_32_11__1_1_2026_egnn_data.pt"
+job_name: "attention_gnn_run"
+
+# --- Model Architecture (same as DeltaGNN for fair comparison) ---
+model:
+  num_layers: 4
+  hidden_features: 64
+  max_z: 120
+  num_cheap_dft_inputs: 12
+  num_precision_settings: 13  # 12-dim bp one-hot + 1 k-density scalar (bp=11 fix)
+  num_geo_inputs: 7
+
+# --- Training Hyperparameters ---
+training:
+  epochs: 800
+  batch_size: 32
+  learning_rate: 1e-3
+
+# --- Loss Weights ---
+weights:
+  delta_e: 1.0
+  delta_gap: 1.0
+  delta_r: 1.0
+  delta_geo: 1.0

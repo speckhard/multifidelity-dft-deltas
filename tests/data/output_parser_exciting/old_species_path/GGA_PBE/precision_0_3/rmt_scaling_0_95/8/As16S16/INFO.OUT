@@ -1,0 +1,99 @@
+ Species :    2 (S)
+     parameters loaded from                 :    S.xml
+     name                                   :    sulphur
+     nuclear charge                         :     -16.00000000
+     electronic charge                      :      16.00000000
+     atomic mass                            :   58452.74216000
+     muffin-tin radius                      :       1.33250000
+     # of radial points in muffin-tin       :     600
+ 
+     atomic positions (lattice) :
+       1 :   0.01467514  0.04230958  0.22301453
+       2 :   0.51467514  0.05603106  0.46155519
+       3 :   0.01712542  0.55603106  0.46155519
+       4 :   0.51712542  0.54230958  0.22301453
+       5 :   0.00726127  0.70205397  0.04292181
+       6 :   0.50726127  0.39628667  0.64164791
+       7 :   0.02453929  0.89628667  0.64164791
+       8 :   0.52453929  0.20205397  0.04292181
+       9 :   0.18192914  0.12633143  0.11492557
+      10 :   0.68192914  0.97200921  0.56964415
+      11 :   0.84987142  0.47200921  0.56964415
+      12 :   0.34987142  0.62633143  0.11492557
+      13 :   0.17398844  0.79071906  0.92869563
+      14 :   0.67398844  0.30762158  0.75587409
+      15 :   0.85781212  0.80762158  0.75587409
+      16 :   0.35781212  0.29071906  0.92869563
+ 
+ Total number of atoms per unit cell        :      32
+ 
+ Spin treatment                             :    spin-unpolarised
+ 
+ Number of Bravais lattice symmetries       :       4
+ Number of crystal symmetries               :       4
+ 
+ k-point grid                               :       4    8    6
+ Total number of k-points                   :      78
+ k-point set is reduced with crystal symmetries
+ 
+ R^MT_min * |G+k|_max (rgkmax)              :       8.93914290
+ APWprecision                               :       0.90000000
+ Species with R^MT_min                      :       2 (S)
+ Maximum |G+k| for APW functions            :       6.70855002
+ Maximum |G| for potential and density      :      30.00000000
+ Polynomial order for pseudochg. density    :       9
+ 
+ G-vector grid sizes                        :     250   120   180
+ Total number of G-vectors                  : 2521821
+ 
+ Maximum angular momentum used for
+     APW functions                          :      10
+     computing H and O matrix elements      :      10
+     potential and density                  :      10
+     inner part of muffin-tin               :       2
+ 
+ Total nuclear charge                       :    -784.00000000
+ Total electronic charge                    :     784.00000000
+ Total core charge                          :     192.00000000
+ Total valence charge                       :     592.00000000
+ 
+ Effective Wigner radius, r_s               :       1.18982815
+ 
+ Number of empty states                     :      20
+ Total number of valence states             :     317
+ 
+ Maximum Hamiltonian size                   :   29660
+ Maximum number of plane-waves              :   28268
+ Total number of local-orbitals             :    1392
+ 
+ Exchange-correlation type                  :      20
+     Perdew-Burke-Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996)
+     Generalised gradient approximation (GGA)
+ 
+ Smearing scheme                            :    Fermi-Dirac
+ Smearing width                             :       0.00367500
+ 
+ Using multisecant Broyden potential mixing
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Ending initialization                                                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+********************************************************************************
+* Groundstate module started                                                   *
+********************************************************************************
+ Output level for this task is set to high
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Self-consistent loop started                                                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Density and potential initialised from atomic data
+ 
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    1                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    1                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

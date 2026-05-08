@@ -1,0 +1,538 @@
+================================================================================
+| EXCITING NEON started                                                        =
+| version hash id: 261fb5e9d369e52c55a7e578395b3a9dbc08f77b                    =
+|                                                                              =
+| compiler: ifort (IFORT) 19.0.5.281 20190815                                  =
+|                                                                              =
+| MPI version using     12 processor(s)                                        =
+| |  using MPI-2 features                                                      =
+|                                                                              =
+| Date (DD-MM-YYYY) : 20-03-2024                                               =
+| Time (hh:mm:ss)   : 05:32:30                                                 =
+|                                                                              =
+| All units are atomic (Hartree, Bohr, etc.)                                   =
+================================================================================
+ 
+********************************************************************************
+* Structural optimisation starting from atomic densities                       *
+********************************************************************************
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting initialization                                                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+ Lattice vectors (cartesian) :
+      8.7422509977      0.0000000000      0.0000000000
+      0.0000000000      8.7422509977      0.0000000000
+      0.0000000000      0.0000000000      5.6434780986
+ 
+ Reciprocal lattice vectors (cartesian) :
+      0.7187148148      0.0000000000      0.0000000000
+      0.0000000000      0.7187148148      0.0000000000
+      0.0000000000      0.0000000000      1.1133533607
+ 
+ Unit cell volume                           :     431.3138326178
+ Brillouin zone volume                      :       0.5751037752
+ 
+ Automatic determination of muffin-tin radii :
+     global rmt scale                       :       0.9500000000
+ 
+ Species :    1 (O)
+     parameters loaded from                 :    O.xml
+     name                                   :    oxygen
+     nuclear charge                         :      -8.00000000
+     electronic charge                      :       8.00000000
+     atomic mass                            :   29165.12203000
+     muffin-tin radius                      :       1.63780000
+     # of radial points in muffin-tin       :     600
+ 
+     atomic positions (lattice) :
+       1 :   0.30504691  0.30504691  0.00000000
+       2 :   0.69495309  0.69495309  0.00000000
+       3 :   0.19495309  0.80504691  0.50000000
+       4 :   0.80504691  0.19495309  0.50000000
+ 
+ Species :    2 (Ti)
+     parameters loaded from                 :    Ti.xml
+     name                                   :    titanium
+     nuclear charge                         :     -22.00000000
+     electronic charge                      :      22.00000000
+     atomic mass                            :   87256.20311000
+     muffin-tin radius                      :       1.88750000
+     # of radial points in muffin-tin       :     800
+ 
+     atomic positions (lattice) :
+       1 :   0.00000000  0.00000000  0.00000000
+       2 :   0.50000000  0.50000000  0.50000000
+ 
+ Total number of atoms per unit cell        :       6
+ 
+ Spin treatment                             :    spin-unpolarised
+ 
+ Number of Bravais lattice symmetries       :      16
+ Number of crystal symmetries               :      16
+ 
+ k-point grid                               :       3    3    5
+ Total number of k-points                   :       9
+ k-point set is reduced with crystal symmetries
+ 
+ R^MT_min * |G+k|_max (rgkmax)              :       3.07195920
+ APWprecision                               :       0.30000000
+ Species with R^MT_min                      :       1 (O)
+ Maximum |G+k| for APW functions            :       1.87566199
+ Maximum |G| for potential and density      :      30.00000000
+ Polynomial order for pseudochg. density    :       9
+ 
+ G-vector grid sizes                        :      90    90    54
+ Total number of G-vectors                  :  196509
+ 
+ Maximum angular momentum used for
+     APW functions                          :      10
+     computing H and O matrix elements      :      10
+     potential and density                  :      10
+     inner part of muffin-tin               :       2
+ 
+ Total nuclear charge                       :     -76.00000000
+ Total electronic charge                    :      76.00000000
+ Total core charge                          :      28.00000000
+ Total valence charge                       :      48.00000000
+ 
+ Effective Wigner radius, r_s               :       1.10653136
+ 
+ Number of empty states                     :      20
+ Total number of valence states             :      45
+ 
+ Maximum Hamiltonian size                   :     240
+ Maximum number of plane-waves              :      52
+ Total number of local-orbitals             :     188
+ 
+ Exchange-correlation type                  :      20
+     Perdew-Burke-Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996)
+     Generalised gradient approximation (GGA)
+ 
+ Smearing scheme                            :    Fermi-Dirac
+ Smearing width                             :       0.00367500
+ 
+ Using multisecant Broyden potential mixing
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Ending initialization                                                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+********************************************************************************
+* Groundstate module started                                                   *
+********************************************************************************
+ Output level for this task is set to high
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Self-consistent loop started                                                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Density and potential initialised from atomic data
+ 
+ Investigating configuration                #         2  (# of SCF cicles =  50)
+ Investigating configuration                #         3  (# of SCF cicles =  15)
+ Investigating configuration                #         4  (# of SCF cicles =  12)
+ Investigating configuration                #         5  (# of SCF cicles =  11)
+ Number of investigated configurations      :         5
+ 
+ BFGS scheme not converged -> Switching to harmonic method
+ 
+ Number of scf iterations                   :        15  (full newton step)
+ Maximum force magnitude           (target) :         0.03094876  (  0.00020000)
+ Total energy at this optimization step     :     -2005.93144004
+ 
+ Atomic positions at this step (lattice) :
+ atom     1   O  :     0.30449067    0.30449067    0.00000000
+ atom     2   O  :     0.69550933    0.69550933    0.00000000
+ atom     3   O  :     0.19550933    0.80449067    0.50000000
+ atom     4   O  :     0.80449067    0.19550933    0.50000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.50000000    0.50000000    0.50000000
+ 
+ Total atomic forces including IBS (cartesian) :
+ atom     1   O  :    -0.02188408   -0.02188408    0.00000000
+ atom     2   O  :     0.02188408    0.02188408    0.00000000
+ atom     3   O  :     0.02188408   -0.02188408    0.00000000
+ atom     4   O  :    -0.02188408    0.02188408    0.00000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.00000000   -0.00000000    0.00000000
+ 
+ Atomic force components including IBS (cartesian) :
+ atom     1   O  :    -0.05628670   -0.05628670    0.00000000   HF force
+                 :     0.03380701    0.03380701    0.00000000   core correction
+                 :     0.00059561    0.00059561    0.00000000   IBS correction
+ atom     2   O  :     0.05628670    0.05628670   -0.00000000   HF force
+                 :    -0.03380701   -0.03380701   -0.00000000   core correction
+                 :    -0.00059561   -0.00059561    0.00000000   IBS correction
+ atom     3   O  :     0.05628670   -0.05628670    0.00000000   HF force
+                 :    -0.03380701    0.03380701    0.00000000   core correction
+                 :    -0.00059561    0.00059561    0.00000000   IBS correction
+ atom     4   O  :    -0.05628670    0.05628670    0.00000000   HF force
+                 :     0.03380701   -0.03380701    0.00000000   core correction
+                 :     0.00059561   -0.00059561    0.00000000   IBS correction
+ atom     5  Ti  :    -0.00000000    0.00000000    0.00000000   HF force
+                 :    -0.00000000    0.00000000    0.00000000   core correction
+                 :     0.00000000    0.00000000    0.00000000   IBS correction
+ atom     6  Ti  :    -0.00000000    0.00000000    0.00000000   HF force
+                 :    -0.00000000    0.00000000    0.00000000   core correction
+                 :    -0.00000000   -0.00000000    0.00000000   IBS correction
+ 
+ Electron charges :
+     core                                   :        28.00000000
+     core leakage                           :         0.00000069
+     valence                                :        48.00000000
+     interstitial                           :        10.54889600
+     charge in muffin-tin spheres :
+                  atom     1     O          :         6.96029860
+                  atom     2     O          :         6.96029860
+                  atom     3     O          :         6.96029860
+                  atom     4     O          :         6.96029860
+                  atom     5    Ti          :        18.80495480
+                  atom     6    Ti          :        18.80495480
+     total charge in muffin-tins            :        65.45110400
+     total charge                           :        76.00000000
+ 
+ Time spent in this optimization step       :       688.38 seconds
+ 
+--------------------------------------------------------------------------------
+- Optimization step    2    (method = harmonic)                                -
+--------------------------------------------------------------------------------
+ Number of scf iterations                   :        16  (full newton step)
+ Maximum force magnitude           (target) :         0.02173974  (  0.00020000)
+ Total energy at this optimization step     :     -2005.93337918
+ 
+ Atomic positions at this step (lattice) :
+ atom     1   O  :     0.30298871    0.30298871    0.00000000
+ atom     2   O  :     0.69701129    0.69701129    0.00000000
+ atom     3   O  :     0.19701129    0.80298871    0.50000000
+ atom     4   O  :     0.80298871    0.19701129    0.50000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.50000000    0.50000000    0.50000000
+ 
+ Total atomic forces including IBS (cartesian) :
+ atom     1   O  :    -0.01537232   -0.01537232    0.00000000
+ atom     2   O  :     0.01537232    0.01537232    0.00000000
+ atom     3   O  :     0.01537232   -0.01537232    0.00000000
+ atom     4   O  :    -0.01537232    0.01537232    0.00000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.00000000   -0.00000000    0.00000000
+ 
+ Atomic force components including IBS (cartesian) :
+ atom     1   O  :    -0.04725321   -0.04725321   -0.00000000   HF force
+                 :     0.03348817    0.03348817    0.00000000   core correction
+                 :    -0.00160728   -0.00160728    0.00000000   IBS correction
+ atom     2   O  :     0.04725321    0.04725321   -0.00000000   HF force
+                 :    -0.03348817   -0.03348817    0.00000000   core correction
+                 :     0.00160728    0.00160728    0.00000000   IBS correction
+ atom     3   O  :     0.04725321   -0.04725321    0.00000000   HF force
+                 :    -0.03348817    0.03348817    0.00000000   core correction
+                 :     0.00160728   -0.00160728    0.00000000   IBS correction
+ atom     4   O  :    -0.04725321    0.04725321    0.00000000   HF force
+                 :     0.03348817   -0.03348817    0.00000000   core correction
+                 :    -0.00160728    0.00160728    0.00000000   IBS correction
+ atom     5  Ti  :     0.00000000   -0.00000000    0.00000000   HF force
+                 :    -0.00000000    0.00000000    0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     6  Ti  :     0.00000000   -0.00000000    0.00000000   HF force
+                 :    -0.00000000    0.00000000    0.00000000   core correction
+                 :     0.00000000   -0.00000000    0.00000000   IBS correction
+ 
+ Electron charges :
+     core                                   :        28.00000000
+     core leakage                           :         0.00000069
+     valence                                :        48.00000000
+     interstitial                           :        10.55752182
+     charge in muffin-tin spheres :
+                  atom     1     O          :         6.95898450
+                  atom     2     O          :         6.95898450
+                  atom     3     O          :         6.95898450
+                  atom     4     O          :         6.95898450
+                  atom     5    Ti          :        18.80327010
+                  atom     6    Ti          :        18.80327010
+     total charge in muffin-tins            :        65.44247818
+     total charge                           :        76.00000000
+ 
+ Time spent in this optimization step       :        56.30 seconds
+ 
+--------------------------------------------------------------------------------
+- Optimization step    3    (method = harmonic)                                -
+--------------------------------------------------------------------------------
+ Number of scf iterations                   :        16  (full newton step)
+ Maximum force magnitude           (target) :         0.01110593  (  0.00020000)
+ Total energy at this optimization step     :     -2005.93479201
+ 
+ Atomic positions at this step (lattice) :
+ atom     1   O  :     0.30123032    0.30123032    0.00000000
+ atom     2   O  :     0.69876968    0.69876968    0.00000000
+ atom     3   O  :     0.19876968    0.80123032    0.50000000
+ atom     4   O  :     0.80123032    0.19876968    0.50000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.50000000    0.50000000    0.50000000
+ 
+ Total atomic forces including IBS (cartesian) :
+ atom     1   O  :    -0.00785308   -0.00785308    0.00000000
+ atom     2   O  :     0.00785308    0.00785308    0.00000000
+ atom     3   O  :     0.00785308   -0.00785308    0.00000000
+ atom     4   O  :    -0.00785308    0.00785308    0.00000000
+ atom     5  Ti  :    -0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :    -0.00000000    0.00000000    0.00000000
+ 
+ Atomic force components including IBS (cartesian) :
+ atom     1   O  :    -0.03670332   -0.03670332    0.00000000   HF force
+                 :     0.03310894    0.03310894   -0.00000000   core correction
+                 :    -0.00425870   -0.00425870    0.00000000   IBS correction
+ atom     2   O  :     0.03670332    0.03670332   -0.00000000   HF force
+                 :    -0.03310894   -0.03310894   -0.00000000   core correction
+                 :     0.00425870    0.00425870    0.00000000   IBS correction
+ atom     3   O  :     0.03670332   -0.03670332   -0.00000000   HF force
+                 :    -0.03310894    0.03310894    0.00000000   core correction
+                 :     0.00425870   -0.00425870    0.00000000   IBS correction
+ atom     4   O  :    -0.03670332    0.03670332   -0.00000000   HF force
+                 :     0.03310894   -0.03310894    0.00000000   core correction
+                 :    -0.00425870    0.00425870    0.00000000   IBS correction
+ atom     5  Ti  :    -0.00000000    0.00000000    0.00000000   HF force
+                 :     0.00000000   -0.00000000   -0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     6  Ti  :    -0.00000000    0.00000000    0.00000000   HF force
+                 :     0.00000000   -0.00000000   -0.00000000   core correction
+                 :     0.00000000    0.00000000    0.00000000   IBS correction
+ 
+ Electron charges :
+     core                                   :        28.00000000
+     core leakage                           :         0.00000069
+     valence                                :        48.00000000
+     interstitial                           :        10.56647633
+     charge in muffin-tin spheres :
+                  atom     1     O          :         6.95760461
+                  atom     2     O          :         6.95760461
+                  atom     3     O          :         6.95760461
+                  atom     4     O          :         6.95760461
+                  atom     5    Ti          :        18.80155261
+                  atom     6    Ti          :        18.80155261
+     total charge in muffin-tins            :        65.43352367
+     total charge                           :        76.00000000
+ 
+ Time spent in this optimization step       :        55.91 seconds
+ 
+--------------------------------------------------------------------------------
+- Optimization step    4    (method = harmonic)                                -
+--------------------------------------------------------------------------------
+ Number of scf iterations                   :        16  (full newton step)
+ Maximum force magnitude           (target) :         0.00359528  (  0.00020000)
+ Total energy at this optimization step     :     -2005.93524240
+ 
+ Atomic positions at this step (lattice) :
+ atom     1   O  :     0.29997271    0.29997271    0.00000000
+ atom     2   O  :     0.70002729    0.70002729    0.00000000
+ atom     3   O  :     0.20002729    0.79997271    0.50000000
+ atom     4   O  :     0.79997271    0.20002729    0.50000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.50000000    0.50000000    0.50000000
+ 
+ Total atomic forces including IBS (cartesian) :
+ atom     1   O  :    -0.00254225   -0.00254225    0.00000000
+ atom     2   O  :     0.00254225    0.00254225    0.00000000
+ atom     3   O  :     0.00254225   -0.00254225    0.00000000
+ atom     4   O  :    -0.00254225    0.00254225    0.00000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.00000000    0.00000000    0.00000000
+ 
+ Atomic force components including IBS (cartesian) :
+ atom     1   O  :    -0.02917111   -0.02917111    0.00000000   HF force
+                 :     0.03283447    0.03283447    0.00000000   core correction
+                 :    -0.00620562   -0.00620562    0.00000000   IBS correction
+ atom     2   O  :     0.02917111    0.02917111    0.00000000   HF force
+                 :    -0.03283447   -0.03283447    0.00000000   core correction
+                 :     0.00620562    0.00620562    0.00000000   IBS correction
+ atom     3   O  :     0.02917111   -0.02917111   -0.00000000   HF force
+                 :    -0.03283447    0.03283447    0.00000000   core correction
+                 :     0.00620562   -0.00620562    0.00000000   IBS correction
+ atom     4   O  :    -0.02917111    0.02917111   -0.00000000   HF force
+                 :     0.03283447   -0.03283447    0.00000000   core correction
+                 :    -0.00620562    0.00620562    0.00000000   IBS correction
+ atom     5  Ti  :     0.00000000   -0.00000000    0.00000000   HF force
+                 :    -0.00000000    0.00000000    0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     6  Ti  :    -0.00000000    0.00000000    0.00000000   HF force
+                 :    -0.00000000   -0.00000000    0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ 
+ Electron charges :
+     core                                   :        28.00000000
+     core leakage                           :         0.00000069
+     valence                                :        48.00000000
+     interstitial                           :        10.57211764
+     charge in muffin-tin spheres :
+                  atom     1     O          :         6.95672246
+                  atom     2     O          :         6.95672246
+                  atom     3     O          :         6.95672246
+                  atom     4     O          :         6.95672246
+                  atom     5    Ti          :        18.80049625
+                  atom     6    Ti          :        18.80049625
+     total charge in muffin-tins            :        65.42788236
+     total charge                           :        76.00000000
+ 
+ Time spent in this optimization step       :        55.89 seconds
+ 
+--------------------------------------------------------------------------------
+- Optimization step    5    (method = harmonic)                                -
+--------------------------------------------------------------------------------
+ Number of scf iterations                   :        15  (full harmonic step)
+ Maximum force magnitude           (target) :         0.00002722  (  0.00020000)
+ Total energy at this optimization step     :     -2005.93529435
+ 
+ Atomic positions at this step (lattice) :
+ atom     1   O  :     0.29937071    0.29937071    0.00000000
+ atom     2   O  :     0.70062929    0.70062929    0.00000000
+ atom     3   O  :     0.20062929    0.79937071    0.50000000
+ atom     4   O  :     0.79937071    0.20062929    0.50000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.50000000    0.50000000    0.50000000
+ 
+ Total atomic forces including IBS (cartesian) :
+ atom     1   O  :    -0.00001925   -0.00001925    0.00000000
+ atom     2   O  :     0.00001925    0.00001925    0.00000000
+ atom     3   O  :     0.00001925   -0.00001925    0.00000000
+ atom     4   O  :    -0.00001925    0.00001925    0.00000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.00000000    0.00000000    0.00000000
+ 
+ Atomic force components including IBS (cartesian) :
+ atom     1   O  :    -0.02556835   -0.02556835   -0.00000000   HF force
+                 :     0.03270228    0.03270228   -0.00000000   core correction
+                 :    -0.00715318   -0.00715318    0.00000000   IBS correction
+ atom     2   O  :     0.02556835    0.02556835    0.00000000   HF force
+                 :    -0.03270228   -0.03270228   -0.00000000   core correction
+                 :     0.00715318    0.00715318    0.00000000   IBS correction
+ atom     3   O  :     0.02556835   -0.02556835    0.00000000   HF force
+                 :    -0.03270228    0.03270228    0.00000000   core correction
+                 :     0.00715318   -0.00715318    0.00000000   IBS correction
+ atom     4   O  :    -0.02556835    0.02556835    0.00000000   HF force
+                 :     0.03270228   -0.03270228    0.00000000   core correction
+                 :    -0.00715318    0.00715318    0.00000000   IBS correction
+ atom     5  Ti  :     0.00000000    0.00000000   -0.00000000   HF force
+                 :    -0.00000000    0.00000000   -0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     6  Ti  :     0.00000000   -0.00000000   -0.00000000   HF force
+                 :    -0.00000000    0.00000000   -0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ 
+ Electron charges :
+     core                                   :        28.00000000
+     core leakage                           :         0.00000069
+     valence                                :        48.00000000
+     interstitial                           :        10.57459146
+     charge in muffin-tin spheres :
+                  atom     1     O          :         6.95633108
+                  atom     2     O          :         6.95633108
+                  atom     3     O          :         6.95633108
+                  atom     4     O          :         6.95633108
+                  atom     5    Ti          :        18.80004210
+                  atom     6    Ti          :        18.80004210
+     total charge in muffin-tins            :        65.42540854
+     total charge                           :        76.00000000
+ 
+ Time spent in this optimization step       :        52.56 seconds
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Force convergence target achieved                                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :     -2005.93529435
+ _______________________________________________________________
+ Fermi energy                               :         0.24128575
+ Kinetic energy                             :      2030.15488139
+ Coulomb energy                             :     -3917.88198752
+ Exchange energy                            :      -115.16216579
+ Correlation energy                         :        -3.04602243
+ Sum of eigenvalues                         :     -1154.06637809
+ Effective potential energy                 :     -3184.22125948
+ Coulomb potential energy                   :     -3031.17702439
+ xc potential energy                        :      -153.04423509
+ Hartree energy                             :       582.48090308
+ Electron-nuclear energy                    :     -4196.13883055
+ Nuclear-nuclear energy                     :      -304.22406006
+ Madelung energy                            :     -2402.29347533
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00001354
+ 
+ Electron charges :
+     core                                   :        28.00000000
+     core leakage                           :         0.00000069
+     valence                                :        48.00000000
+     interstitial                           :        10.57459146
+     charge in muffin-tin spheres :
+                  atom     1     O          :         6.95633108
+                  atom     2     O          :         6.95633108
+                  atom     3     O          :         6.95633108
+                  atom     4     O          :         6.95633108
+                  atom     5    Ti          :        18.80004210
+                  atom     6    Ti          :        18.80004210
+     total charge in muffin-tins            :        65.42540854
+     total charge                           :        76.00000000
+ 
+ Optimized atomic positions (lattice) :
+ atom     1   O  :     0.29937071    0.29937071    0.00000000
+ atom     2   O  :     0.70062929    0.70062929    0.00000000
+ atom     3   O  :     0.20062929    0.79937071    0.50000000
+ atom     4   O  :     0.79937071    0.20062929    0.50000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.50000000    0.50000000    0.50000000
+ 
+ Total atomic forces including IBS (cartesian) :
+ atom     1   O  :    -0.00001925   -0.00001925    0.00000000
+ atom     2   O  :     0.00001925    0.00001925    0.00000000
+ atom     3   O  :     0.00001925   -0.00001925    0.00000000
+ atom     4   O  :    -0.00001925    0.00001925    0.00000000
+ atom     5  Ti  :     0.00000000    0.00000000    0.00000000
+ atom     6  Ti  :     0.00000000    0.00000000    0.00000000
+ 
+ Atomic force components including IBS (cartesian) :
+ atom     1   O  :    -0.02556835   -0.02556835   -0.00000000   HF force
+                 :     0.03270228    0.03270228   -0.00000000   core correction
+                 :    -0.00715318   -0.00715318    0.00000000   IBS correction
+ atom     2   O  :     0.02556835    0.02556835    0.00000000   HF force
+                 :    -0.03270228   -0.03270228   -0.00000000   core correction
+                 :     0.00715318    0.00715318    0.00000000   IBS correction
+ atom     3   O  :     0.02556835   -0.02556835    0.00000000   HF force
+                 :    -0.03270228    0.03270228    0.00000000   core correction
+                 :     0.00715318   -0.00715318    0.00000000   IBS correction
+ atom     4   O  :    -0.02556835    0.02556835    0.00000000   HF force
+                 :     0.03270228   -0.03270228    0.00000000   core correction
+                 :    -0.00715318    0.00715318    0.00000000   IBS correction
+ atom     5  Ti  :     0.00000000    0.00000000   -0.00000000   HF force
+                 :    -0.00000000    0.00000000   -0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     6  Ti  :     0.00000000   -0.00000000   -0.00000000   HF force
+                 :    -0.00000000    0.00000000   -0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ 
+********************************************************************************
+* Structure-optimization module stopped                                        *
+********************************************************************************
+ 
+--------------------------------------------------------------------------------
+- Timings (seconds)                                                            -
+--------------------------------------------------------------------------------
+ Initialisation                             :         5.43
+ Hamiltonian and overlap matrix set up      :         0.82
+ First-variational secular equation         :         1.85
+ Calculation of charge-density              :        58.61
+ Calculation of potential                   :       679.14
+ Muffin-tin manipulations                   :       228.30
+ APW matching                               :         0.28
+ Disk reads/writes                          :       298.89
+ Mixing efforts                             :         0.54
+ Calculation of force                       :         4.73
+ Solver of Dirac eqn.                       :         2.63
+ Solver of rel. Schroedinger eqn.           :        40.75
+ Total time spent in radial solvers         :        43.39
+ 
+ Total time spent (seconds)                 :       974.39
+ 
+--------------------------------------------------------------------------------
+- CAUTION! Warnings have been written in file WARNING.OUT !                    -
+--------------------------------------------------------------------------------
+================================================================================
+| EXCITING NEON stopped                                                        =
+================================================================================

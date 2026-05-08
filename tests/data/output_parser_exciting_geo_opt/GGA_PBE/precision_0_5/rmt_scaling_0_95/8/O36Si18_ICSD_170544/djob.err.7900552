@@ -1,0 +1,4 @@
+Module for Intel Parallel Studio XE Composer Edition (version 2019 Update 5) loaded.
+Module for Intel-MPI (version 2018.5) loaded.
+slurmstepd: error: *** JOB 7900552 ON bcn1879 CANCELLED AT 2024-07-15T16:46:32 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 7900552.0 ON bcn1879 CANCELLED AT 2024-07-15T16:46:32 DUE TO TIME LIMIT ***

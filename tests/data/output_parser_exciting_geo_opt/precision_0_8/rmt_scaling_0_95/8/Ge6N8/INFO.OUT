@@ -1,0 +1,1034 @@
+================================================================================
+| EXCITING NEON started                                                        =
+| version hash id: 261fb5e9d369e52c55a7e578395b3a9dbc08f77b                    =
+|                                                                              =
+| compiler: ifort (IFORT) 19.0.5.281 20190815                                  =
+|                                                                              =
+| MPI version using     12 processor(s)                                        =
+| |  using MPI-2 features                                                      =
+|                                                                              =
+| Date (DD-MM-YYYY) : 17-05-2024                                               =
+| Time (hh:mm:ss)   : 00:30:01                                                 =
+|                                                                              =
+| All units are atomic (Hartree, Bohr, etc.)                                   =
+================================================================================
+ 
+********************************************************************************
+* Structural optimisation run resuming from STATE.OUT                          *
+********************************************************************************
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting initialization                                                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+ Lattice vectors (cartesian) :
+     11.1074813500      0.0000000000      0.0000000000
+      5.5537406740      9.6193610200      0.0000000000
+      5.5537406740      3.2064536730      9.0692205440
+ 
+ Reciprocal lattice vectors (cartesian) :
+      0.5656714704     -0.3265905757     -0.2309344107
+      0.0000000000      0.6531811514     -0.2309344107
+      0.0000000000      0.0000000000      0.6928032323
+ 
+ Unit cell volume                           :     969.0178568398
+ Brillouin zone volume                      :       0.2559810551
+ 
+ Automatic determination of muffin-tin radii :
+     global rmt scale                       :       0.9500000000
+ 
+ Species :    1 (Ge)
+     parameters loaded from                 :    Ge.xml
+     name                                   :    germanium
+     nuclear charge                         :     -32.00000000
+     electronic charge                      :      32.00000000
+     atomic mass                            :  132359.93290000
+     muffin-tin radius                      :       1.97230000
+     # of radial points in muffin-tin       :     800
+ 
+     atomic positions (lattice) :
+       1 :   0.00000000  0.00000000  0.00000000
+       2 :   0.75000000  0.75000000  0.75000000
+       3 :   0.37500000  0.37500000  0.87500000
+       4 :   0.87500000  0.37500000  0.37500000
+       5 :   0.37500000  0.37500000  0.37500000
+       6 :   0.37500000  0.87500000  0.37500000
+ 
+ Species :    2 (N)
+     parameters loaded from                 :    N.xml
+     name                                   :    nitrogen
+     nuclear charge                         :      -7.00000000
+     electronic charge                      :       7.00000000
+     atomic mass                            :   25532.72506000
+     muffin-tin radius                      :       1.47170000
+     # of radial points in muffin-tin       :     400
+ 
+     atomic positions (lattice) :
+       1 :   0.61675285  0.61675285  0.14974146
+       2 :   0.14974146  0.61675285  0.61675285
+       3 :   0.61675285  0.61675285  0.61675285
+       4 :   0.61675285  0.14974146  0.61675285
+       5 :   0.60025854  0.13324715  0.13324715
+       6 :   0.13324715  0.13324715  0.60025854
+       7 :   0.13324715  0.13324715  0.13324715
+       8 :   0.13324715  0.60025854  0.13324715
+ 
+ Total number of atoms per unit cell        :      14
+ 
+ Spin treatment                             :    spin-unpolarised
+ 
+ Number of Bravais lattice symmetries       :      48
+ Number of crystal symmetries               :      48
+ 
+ k-point grid                               :      11   11   11
+ Total number of k-points                   :      56
+ k-point set is reduced with crystal symmetries
+ 
+ R^MT_min * |G+k|_max (rgkmax)              :       7.64285440
+ APWprecision                               :       0.80000000
+ Species with R^MT_min                      :       2 (N)
+ Maximum |G+k| for APW functions            :       5.19321492
+ Maximum |G| for potential and density      :      30.00000000
+ Polynomial order for pseudochg. density    :       9
+ 
+ G-vector grid sizes                        :     108   108   108
+ Total number of G-vectors                  :  441711
+ 
+ Maximum angular momentum used for
+     APW functions                          :      10
+     computing H and O matrix elements      :      10
+     potential and density                  :      10
+     inner part of muffin-tin               :       2
+ 
+ Total nuclear charge                       :    -248.00000000
+ Total electronic charge                    :     248.00000000
+ Total core charge                          :      76.00000000
+ Total valence charge                       :     172.00000000
+ 
+ Effective Wigner radius, r_s               :       0.97708084
+ 
+ Number of empty states                     :      20
+ Total number of valence states             :     107
+ 
+ Maximum Hamiltonian size                   :    2559
+ Maximum number of plane-waves              :    2307
+ Total number of local-orbitals             :     252
+ 
+ Exchange-correlation type                  :      20
+     Perdew-Burke-Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996)
+     Generalised gradient approximation (GGA)
+ 
+ Smearing scheme                            :    Fermi-Dirac
+ Smearing width                             :       0.00367500
+ 
+ Using multisecant Broyden potential mixing
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Ending initialization                                                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+********************************************************************************
+* Groundstate module started                                                   *
+********************************************************************************
+ Output level for this task is set to high
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Self-consistent loop started                                                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Potential read in from STATE.OUT
+ 
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    1                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.51750760
+ _______________________________________________________________
+ Fermi energy                               :         0.34832502
+ Kinetic energy                             :     13291.17285932
+ Coulomb energy                             :    -25789.69565052
+ Exchange energy                            :      -522.51242209
+ Correlation energy                         :       -11.48229431
+ Sum of eigenvalues                         :     -7442.22780444
+ Effective potential energy                 :    -20733.40066376
+ Coulomb potential energy                   :    -20039.58707807
+ xc potential energy                        :      -693.81358569
+ Hartree energy                             :      4125.04718122
+ Electron-nuclear energy                    :    -28289.68144050
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.90211148
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00289925
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83366566
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44494419
+                  atom     2    Ge          :        29.44494419
+                  atom     3    Ge          :        29.43037549
+                  atom     4    Ge          :        29.43037549
+                  atom     5    Ge          :        29.43037549
+                  atom     6    Ge          :        29.43037549
+                  atom     7     N          :         5.56936800
+                  atom     8     N          :         5.56936800
+                  atom     9     N          :         5.56936800
+                  atom    10     N          :         5.56936800
+                  atom    11     N          :         5.56936800
+                  atom    12     N          :         5.56936800
+                  atom    13     N          :         5.56936800
+                  atom    14     N          :         5.56936800
+     total charge in muffin-tins            :       221.16633434
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :       159.79
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    2                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.53797780
+ _______________________________________________________________
+ Fermi energy                               :         0.34832476
+ Kinetic energy                             :     13291.16450118
+ Coulomb energy                             :    -25789.70714465
+ Exchange energy                            :      -522.51302990
+ Correlation energy                         :       -11.48230443
+ Sum of eigenvalues                         :     -7442.23561335
+ Effective potential energy                 :    -20733.40011453
+ Coulomb potential energy                   :    -20039.58570924
+ xc potential energy                        :      -693.81440529
+ Hartree energy                             :      4125.06004418
+ Electron-nuclear energy                    :    -28289.70579760
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.91429003
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290048
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83367299
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44496947
+                  atom     2    Ge          :        29.44496947
+                  atom     3    Ge          :        29.43041933
+                  atom     4    Ge          :        29.43041933
+                  atom     5    Ge          :        29.43041933
+                  atom     6    Ge          :        29.43041933
+                  atom     7     N          :         5.56933884
+                  atom     8     N          :         5.56933884
+                  atom     9     N          :         5.56933884
+                  atom    10     N          :         5.56933884
+                  atom    11     N          :         5.56933884
+                  atom    12     N          :         5.56933884
+                  atom    13     N          :         5.56933884
+                  atom    14     N          :         5.56933884
+     total charge in muffin-tins            :       221.16632701
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :       300.04
+ 
+ RMS change in effective potential (target) :  0.304343E-02  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.204702E-01  ( 0.100000E-06)
+ Charge distance                   (target) :  0.355041E-05  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.352314E-02  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    3                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.54622419
+ _______________________________________________________________
+ Fermi energy                               :         0.34832375
+ Kinetic energy                             :     13291.16119335
+ Coulomb energy                             :    -25789.71181858
+ Exchange energy                            :      -522.51329123
+ Correlation energy                         :       -11.48230773
+ Sum of eigenvalues                         :     -7442.23878615
+ Effective potential energy                 :    -20733.39997951
+ Coulomb potential energy                   :    -20039.58522389
+ xc potential energy                        :      -693.81475561
+ Hartree energy                             :      4125.06520346
+ Electron-nuclear energy                    :    -28289.71563081
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.91920663
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290076
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83365396
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44497801
+                  atom     2    Ge          :        29.44497801
+                  atom     3    Ge          :        29.43043365
+                  atom     4    Ge          :        29.43043365
+                  atom     5    Ge          :        29.43043365
+                  atom     6    Ge          :        29.43043365
+                  atom     7     N          :         5.56933193
+                  atom     8     N          :         5.56933193
+                  atom     9     N          :         5.56933193
+                  atom    10     N          :         5.56933193
+                  atom    11     N          :         5.56933193
+                  atom    12     N          :         5.56933193
+                  atom    13     N          :         5.56933193
+                  atom    14     N          :         5.56933193
+     total charge in muffin-tins            :       221.16634604
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :       442.87
+ 
+ RMS change in effective potential (target) :  0.224020E-02  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.824639E-02  ( 0.100000E-06)
+ Charge distance                   (target) :  0.132239E-05  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.888954E-05  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    4                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.50285658
+ _______________________________________________________________
+ Fermi energy                               :         0.34831741
+ Kinetic energy                             :     13291.17907750
+ Coulomb energy                             :    -25789.68753861
+ Exchange energy                            :      -522.51211400
+ Correlation energy                         :       -11.48228146
+ Sum of eigenvalues                         :     -7442.22232943
+ Effective potential energy                 :    -20733.40140693
+ Coulomb potential energy                   :    -20039.58825206
+ xc potential energy                        :      -693.81315487
+ Hartree energy                             :      4125.03789532
+ Electron-nuclear energy                    :    -28289.66404270
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.89341258
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00289663
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83348418
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44491261
+                  atom     2    Ge          :        29.44491261
+                  atom     3    Ge          :        29.43032144
+                  atom     4    Ge          :        29.43032144
+                  atom     5    Ge          :        29.43032144
+                  atom     6    Ge          :        29.43032144
+                  atom     7     N          :         5.56942560
+                  atom     8     N          :         5.56942560
+                  atom     9     N          :         5.56942560
+                  atom    10     N          :         5.56942560
+                  atom    11     N          :         5.56942560
+                  atom    12     N          :         5.56942560
+                  atom    13     N          :         5.56942560
+                  atom    14     N          :         5.56942560
+     total charge in muffin-tins            :       221.16651582
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :       584.88
+ 
+ RMS change in effective potential (target) :  0.692141E-04  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.433676E-01  ( 0.100000E-06)
+ Charge distance                   (target) :  0.884499E-05  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.793045E-04  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    5                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.62342422
+ _______________________________________________________________
+ Fermi energy                               :         0.34833354
+ Kinetic energy                             :     13291.12805200
+ Coulomb energy                             :    -25789.75379974
+ Exchange energy                            :      -522.51531715
+ Correlation energy                         :       -11.48235932
+ Sum of eigenvalues                         :     -7442.26740756
+ Effective potential energy                 :    -20733.39545956
+ Coulomb potential energy                   :    -20039.57793713
+ xc potential energy                        :      -693.81752242
+ Hartree energy                             :      4125.11447137
+ Electron-nuclear energy                    :    -28289.80687988
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.96483117
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290811
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83400031
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44509997
+                  atom     2    Ge          :        29.44509997
+                  atom     3    Ge          :        29.43066118
+                  atom     4    Ge          :        29.43066118
+                  atom     5    Ge          :        29.43066118
+                  atom     6    Ge          :        29.43066118
+                  atom     7     N          :         5.56914438
+                  atom     8     N          :         5.56914438
+                  atom     9     N          :         5.56914438
+                  atom    10     N          :         5.56914438
+                  atom    11     N          :         5.56914438
+                  atom    12     N          :         5.56914438
+                  atom    13     N          :         5.56914438
+                  atom    14     N          :         5.56914438
+     total charge in muffin-tins            :       221.16599969
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :       729.04
+ 
+ RMS change in effective potential (target) :  0.116628E-03  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.120568      ( 0.100000E-06)
+ Charge distance                   (target) :  0.259980E-04  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.298577E-03  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    6                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55316194
+ _______________________________________________________________
+ Fermi energy                               :         0.34831847
+ Kinetic energy                             :     13291.15914624
+ Coulomb energy                             :    -25789.71637428
+ Exchange energy                            :      -522.51362861
+ Correlation energy                         :       -11.48230528
+ Sum of eigenvalues                         :     -7442.24163303
+ Effective potential energy                 :    -20733.40077927
+ Coulomb potential energy                   :    -20039.58558464
+ xc potential energy                        :      -693.81519462
+ Hartree energy                             :      4125.06939841
+ Electron-nuclear energy                    :    -28289.72438146
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92358196
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00289982
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83350271
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44497736
+                  atom     2    Ge          :        29.44497736
+                  atom     3    Ge          :        29.43041964
+                  atom     4    Ge          :        29.43041964
+                  atom     5    Ge          :        29.43041964
+                  atom     6    Ge          :        29.43041964
+                  atom     7     N          :         5.56935800
+                  atom     8     N          :         5.56935800
+                  atom     9     N          :         5.56935800
+                  atom    10     N          :         5.56935800
+                  atom    11     N          :         5.56935800
+                  atom    12     N          :         5.56935800
+                  atom    13     N          :         5.56935800
+                  atom    14     N          :         5.56935800
+     total charge in muffin-tins            :       221.16649729
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :       875.79
+ 
+ RMS change in effective potential (target) :  0.965851E-05  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.702623E-01  ( 0.100000E-06)
+ Charge distance                   (target) :  0.179984E-04  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.254525E-03  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    7                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.54994898
+ _______________________________________________________________
+ Fermi energy                               :         0.34832173
+ Kinetic energy                             :     13291.15957788
+ Coulomb energy                             :    -25789.71379252
+ Exchange energy                            :      -522.51342545
+ Correlation energy                         :       -11.48230888
+ Sum of eigenvalues                         :     -7442.24010489
+ Effective potential energy                 :    -20733.39968277
+ Coulomb potential energy                   :    -20039.58474846
+ xc potential energy                        :      -693.81493431
+ Hartree energy                             :      4125.06765283
+ Electron-nuclear energy                    :    -28289.72005412
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92141829
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290049
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361630
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44497832
+                  atom     2    Ge          :        29.44497832
+                  atom     3    Ge          :        29.43044065
+                  atom     4    Ge          :        29.43044065
+                  atom     5    Ge          :        29.43044065
+                  atom     6    Ge          :        29.43044065
+                  atom     7     N          :         5.56933306
+                  atom     8     N          :         5.56933306
+                  atom     9     N          :         5.56933306
+                  atom    10     N          :         5.56933306
+                  atom    11     N          :         5.56933306
+                  atom    12     N          :         5.56933306
+                  atom    13     N          :         5.56933306
+                  atom    14     N          :         5.56933306
+     total charge in muffin-tins            :       221.16638370
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :      1015.34
+ 
+ RMS change in effective potential (target) :  0.105624E-05  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.321297E-02  ( 0.100000E-06)
+ Charge distance                   (target) :  0.219129E-05  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.400231E-04  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    8                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55001177
+ _______________________________________________________________
+ Fermi energy                               :         0.34832176
+ Kinetic energy                             :     13291.15959506
+ Coulomb energy                             :    -25789.71387027
+ Exchange energy                            :      -522.51342759
+ Correlation energy                         :       -11.48230897
+ Sum of eigenvalues                         :     -7442.24013469
+ Effective potential energy                 :    -20733.39972975
+ Coulomb potential energy                   :    -20039.58479242
+ xc potential energy                        :      -693.81493733
+ Hartree energy                             :      4125.06768662
+ Electron-nuclear energy                    :    -28289.72016566
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92147406
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290062
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83362022
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498317
+                  atom     2    Ge          :        29.44498317
+                  atom     3    Ge          :        29.43043864
+                  atom     4    Ge          :        29.43043864
+                  atom     5    Ge          :        29.43043864
+                  atom     6    Ge          :        29.43043864
+                  atom     7     N          :         5.56933236
+                  atom     8     N          :         5.56933236
+                  atom     9     N          :         5.56933236
+                  atom    10     N          :         5.56933236
+                  atom    11     N          :         5.56933236
+                  atom    12     N          :         5.56933236
+                  atom    13     N          :         5.56933236
+                  atom    14     N          :         5.56933236
+     total charge in muffin-tins            :       221.16637978
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :      1152.33
+ 
+ RMS change in effective potential (target) :  0.102563E-05  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.627924E-04  ( 0.100000E-06)
+ Charge distance                   (target) :  0.194256E-06  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.101992E-04  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    9                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55004212
+ _______________________________________________________________
+ Fermi energy                               :         0.34832159
+ Kinetic energy                             :     13291.15959655
+ Coulomb energy                             :    -25789.71389661
+ Exchange energy                            :      -522.51343335
+ Correlation energy                         :       -11.48230871
+ Sum of eigenvalues                         :     -7442.24015625
+ Effective potential energy                 :    -20733.39975280
+ Coulomb potential energy                   :    -20039.58480843
+ xc potential energy                        :      -693.81494437
+ Hartree energy                             :      4125.06769695
+ Electron-nuclear energy                    :    -28289.72020233
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92149240
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290050
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361237
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498007
+                  atom     2    Ge          :        29.44498007
+                  atom     3    Ge          :        29.43043871
+                  atom     4    Ge          :        29.43043871
+                  atom     5    Ge          :        29.43043871
+                  atom     6    Ge          :        29.43043871
+                  atom     7     N          :         5.56933408
+                  atom     8     N          :         5.56933408
+                  atom     9     N          :         5.56933408
+                  atom    10     N          :         5.56933408
+                  atom    11     N          :         5.56933408
+                  atom    12     N          :         5.56933408
+                  atom    13     N          :         5.56933408
+                  atom    14     N          :         5.56933408
+     total charge in muffin-tins            :       221.16638763
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :      1299.90
+ 
+ RMS change in effective potential (target) :  0.463008E-07  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.303508E-04  ( 0.100000E-06)
+ Charge distance                   (target) :  0.151107E-06  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.500051E-05  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :   10                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55004042
+ _______________________________________________________________
+ Fermi energy                               :         0.34832160
+ Kinetic energy                             :     13291.15959793
+ Coulomb energy                             :    -25789.71389647
+ Exchange energy                            :      -522.51343317
+ Correlation energy                         :       -11.48230871
+ Sum of eigenvalues                         :     -7442.24015536
+ Effective potential energy                 :    -20733.39975330
+ Coulomb potential energy                   :    -20039.58480914
+ xc potential energy                        :      -693.81494415
+ Hartree energy                             :      4125.06769609
+ Electron-nuclear energy                    :    -28289.72020133
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92149189
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290051
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361270
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498014
+                  atom     2    Ge          :        29.44498014
+                  atom     3    Ge          :        29.43043871
+                  atom     4    Ge          :        29.43043871
+                  atom     5    Ge          :        29.43043871
+                  atom     6    Ge          :        29.43043871
+                  atom     7     N          :         5.56933402
+                  atom     8     N          :         5.56933402
+                  atom     9     N          :         5.56933402
+                  atom    10     N          :         5.56933402
+                  atom    11     N          :         5.56933402
+                  atom    12     N          :         5.56933402
+                  atom    13     N          :         5.56933402
+                  atom    14     N          :         5.56933402
+     total charge in muffin-tins            :       221.16638730
+     total charge                           :       248.00000000
+ 
+ Wrote STATE.OUT
+ 
+ Wall time (seconds)                        :      1457.96
+ 
+ RMS change in effective potential (target) :  0.207896E-07  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.170333E-05  ( 0.100000E-06)
+ Charge distance                   (target) :  0.121636E-07  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.483241E-06  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :   11                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55004146
+ _______________________________________________________________
+ Fermi energy                               :         0.34832160
+ Kinetic energy                             :     13291.15959628
+ Coulomb energy                             :    -25789.71389591
+ Exchange energy                            :      -522.51343312
+ Correlation energy                         :       -11.48230872
+ Sum of eigenvalues                         :     -7442.24015557
+ Effective potential energy                 :    -20733.39975185
+ Coulomb potential energy                   :    -20039.58480776
+ xc potential energy                        :      -693.81494409
+ Hartree energy                             :      4125.06769692
+ Electron-nuclear energy                    :    -28289.72020160
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92149203
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290051
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361273
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498013
+                  atom     2    Ge          :        29.44498013
+                  atom     3    Ge          :        29.43043874
+                  atom     4    Ge          :        29.43043874
+                  atom     5    Ge          :        29.43043874
+                  atom     6    Ge          :        29.43043874
+                  atom     7     N          :         5.56933401
+                  atom     8     N          :         5.56933401
+                  atom     9     N          :         5.56933401
+                  atom    10     N          :         5.56933401
+                  atom    11     N          :         5.56933401
+                  atom    12     N          :         5.56933401
+                  atom    13     N          :         5.56933401
+                  atom    14     N          :         5.56933401
+     total charge in muffin-tins            :       221.16638727
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :      1659.83
+ 
+ RMS change in effective potential (target) :  0.140898E-08  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.104812E-05  ( 0.100000E-06)
+ Charge distance                   (target) :  0.434892E-08  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.138821E-06  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :   12                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55004129
+ _______________________________________________________________
+ Fermi energy                               :         0.34832160
+ Kinetic energy                             :     13291.15959633
+ Coulomb energy                             :    -25789.71389580
+ Exchange energy                            :      -522.51343311
+ Correlation energy                         :       -11.48230872
+ Sum of eigenvalues                         :     -7442.24015549
+ Effective potential energy                 :    -20733.39975183
+ Coulomb potential energy                   :    -20039.58480775
+ xc potential energy                        :      -693.81494408
+ Hartree energy                             :      4125.06769682
+ Electron-nuclear energy                    :    -28289.72020138
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92149192
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290051
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361274
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498014
+                  atom     2    Ge          :        29.44498014
+                  atom     3    Ge          :        29.43043874
+                  atom     4    Ge          :        29.43043874
+                  atom     5    Ge          :        29.43043874
+                  atom     6    Ge          :        29.43043874
+                  atom     7     N          :         5.56933401
+                  atom     8     N          :         5.56933401
+                  atom     9     N          :         5.56933401
+                  atom    10     N          :         5.56933401
+                  atom    11     N          :         5.56933401
+                  atom    12     N          :         5.56933401
+                  atom    13     N          :         5.56933401
+                  atom    14     N          :         5.56933401
+     total charge in muffin-tins            :       221.16638726
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :      1818.91
+ 
+ RMS change in effective potential (target) :  0.211604E-09  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.175072E-06  ( 0.100000E-06)
+ Charge distance                   (target) :  0.397289E-09  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.147551E-07  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :   13                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55004126
+ _______________________________________________________________
+ Fermi energy                               :         0.34832160
+ Kinetic energy                             :     13291.15959637
+ Coulomb energy                             :    -25789.71389581
+ Exchange energy                            :      -522.51343311
+ Correlation energy                         :       -11.48230872
+ Sum of eigenvalues                         :     -7442.24015548
+ Effective potential energy                 :    -20733.39975185
+ Coulomb potential energy                   :    -20039.58480777
+ xc potential energy                        :      -693.81494408
+ Hartree energy                             :      4125.06769681
+ Electron-nuclear energy                    :    -28289.72020138
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92149192
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290051
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361274
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498013
+                  atom     2    Ge          :        29.44498013
+                  atom     3    Ge          :        29.43043874
+                  atom     4    Ge          :        29.43043874
+                  atom     5    Ge          :        29.43043874
+                  atom     6    Ge          :        29.43043874
+                  atom     7     N          :         5.56933401
+                  atom     8     N          :         5.56933401
+                  atom     9     N          :         5.56933401
+                  atom    10     N          :         5.56933401
+                  atom    11     N          :         5.56933401
+                  atom    12     N          :         5.56933401
+                  atom    13     N          :         5.56933401
+                  atom    14     N          :         5.56933401
+     total charge in muffin-tins            :       221.16638726
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :      1961.22
+ 
+ RMS change in effective potential (target) :  0.204591E-09  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.243544E-07  ( 0.100000E-06)
+ Charge distance                   (target) :  0.269943E-10  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.827242E-09  ( 0.500000E-04)
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :   14                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55004127
+ _______________________________________________________________
+ Fermi energy                               :         0.34832160
+ Kinetic energy                             :     13291.15959637
+ Coulomb energy                             :    -25789.71389581
+ Exchange energy                            :      -522.51343311
+ Correlation energy                         :       -11.48230872
+ Sum of eigenvalues                         :     -7442.24015548
+ Effective potential energy                 :    -20733.39975185
+ Coulomb potential energy                   :    -20039.58480777
+ xc potential energy                        :      -693.81494408
+ Hartree energy                             :      4125.06769681
+ Electron-nuclear energy                    :    -28289.72020139
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92149193
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290051
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361274
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498013
+                  atom     2    Ge          :        29.44498013
+                  atom     3    Ge          :        29.43043874
+                  atom     4    Ge          :        29.43043874
+                  atom     5    Ge          :        29.43043874
+                  atom     6    Ge          :        29.43043874
+                  atom     7     N          :         5.56933401
+                  atom     8     N          :         5.56933401
+                  atom     9     N          :         5.56933401
+                  atom    10     N          :         5.56933401
+                  atom    11     N          :         5.56933401
+                  atom    12     N          :         5.56933401
+                  atom    13     N          :         5.56933401
+                  atom    14     N          :         5.56933401
+     total charge in muffin-tins            :       221.16638726
+     total charge                           :       248.00000000
+ 
+ Wall time (seconds)                        :      2118.04
+ 
+ RMS change in effective potential (target) :  0.903398E-10  ( 0.100000E-03)
+ Absolute change in total energy   (target) :  0.789987E-08  ( 0.100000E-06)
+ Charge distance                   (target) :  0.447350E-11  ( 0.100000E-06)
+ Abs. change in max-nonIBS-force   (target) :  0.158087E-09  ( 0.500000E-04)
+                                                                                
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+| Convergency criteria checked for the last 2 iterations                       +
+| Convergence targets achieved. Performing final SCF iteration                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :    -13032.55004128
+ _______________________________________________________________
+ Fermi energy                               :         0.34832160
+ Kinetic energy                             :     13291.15959636
+ Coulomb energy                             :    -25789.71389581
+ Exchange energy                            :      -522.51343311
+ Correlation energy                         :       -11.48230872
+ Sum of eigenvalues                         :     -7442.24015549
+ Effective potential energy                 :    -20733.39975185
+ Coulomb potential energy                   :    -20039.58480777
+ xc potential energy                        :      -693.81494408
+ Hartree energy                             :      4125.06769681
+ Electron-nuclear energy                    :    -28289.72020139
+ Nuclear-nuclear energy                     :     -1625.06139123
+ Madelung energy                            :    -15769.92149193
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :         0.00290051
+ 
+ Electron charges :
+     core                                   :        76.00000000
+     core leakage                           :         0.00004755
+     valence                                :       172.00000000
+     interstitial                           :        26.83361274
+     charge in muffin-tin spheres :
+                  atom     1    Ge          :        29.44498013
+                  atom     2    Ge          :        29.44498013
+                  atom     3    Ge          :        29.43043874
+                  atom     4    Ge          :        29.43043874
+                  atom     5    Ge          :        29.43043874
+                  atom     6    Ge          :        29.43043874
+                  atom     7     N          :         5.56933401
+                  atom     8     N          :         5.56933401
+                  atom     9     N          :         5.56933401
+                  atom    10     N          :         5.56933401
+                  atom    11     N          :         5.56933401
+                  atom    12     N          :         5.56933401
+                  atom    13     N          :         5.56933401
+                  atom    14     N          :         5.56933401
+     total charge in muffin-tins            :       221.16638726
+     total charge                           :       248.00000000
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Self-consistent loop stopped                                                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ STATE.OUT is written
+ 
+--------------------------------------------------------------------------------
+- Writing atomic positions and forces                                          -
+--------------------------------------------------------------------------------
+ 
+ Atomic positions (lattice) :
+ atom     1  Ge  :     0.00000000    0.00000000    0.00000000
+ atom     2  Ge  :     0.75000000    0.75000000    0.75000000
+ atom     3  Ge  :     0.37500000    0.37500000    0.87500000
+ atom     4  Ge  :     0.87500000    0.37500000    0.37500000
+ atom     5  Ge  :     0.37500000    0.37500000    0.37500000
+ atom     6  Ge  :     0.37500000    0.87500000    0.37500000
+ atom     7   N  :     0.61675285    0.61675285    0.14974146
+ atom     8   N  :     0.14974146    0.61675285    0.61675285
+ atom     9   N  :     0.61675285    0.61675285    0.61675285
+ atom    10   N  :     0.61675285    0.14974146    0.61675285
+ atom    11   N  :     0.60025854    0.13324715    0.13324715
+ atom    12   N  :     0.13324715    0.13324715    0.60025854
+ atom    13   N  :     0.13324715    0.13324715    0.13324715
+ atom    14   N  :     0.13324715    0.60025854    0.13324715
+ 
+ Total atomic forces including IBS (cartesian) :
+ atom     1  Ge  :    -0.00000000    0.00000000   -0.00000000
+ atom     2  Ge  :    -0.00000000    0.00000000   -0.00000000
+ atom     3  Ge  :    -0.00000000    0.00000000   -0.00000000
+ atom     4  Ge  :    -0.00000000    0.00000000   -0.00000000
+ atom     5  Ge  :    -0.00000000    0.00000000   -0.00000000
+ atom     6  Ge  :    -0.00000000    0.00000000   -0.00000000
+ atom     7   N  :     0.00000000    0.00000000   -0.00012659
+ atom     8   N  :    -0.00010336    0.00005968    0.00004220
+ atom     9   N  :     0.00010336    0.00005968    0.00004220
+ atom    10   N  :     0.00000000   -0.00011935    0.00004220
+ atom    11   N  :     0.00010336   -0.00005968   -0.00004220
+ atom    12   N  :    -0.00000000   -0.00000000    0.00012659
+ atom    13   N  :    -0.00010336   -0.00005968   -0.00004220
+ atom    14   N  :    -0.00000000    0.00011935   -0.00004220
+ 
+ Atomic force components including IBS (cartesian) :
+ atom     1  Ge  :    -0.00000000    0.00000000   -0.00000000   HF force
+                 :     0.00000000   -0.00000000    0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     2  Ge  :    -0.00000000    0.00000000   -0.00000000   HF force
+                 :     0.00000000   -0.00000000    0.00000000   core correction
+                 :    -0.00000000   -0.00000000   -0.00000000   IBS correction
+ atom     3  Ge  :    -0.00000000    0.00000000   -0.00000000   HF force
+                 :     0.00000000   -0.00000000    0.00000000   core correction
+                 :    -0.00000000   -0.00000000    0.00000000   IBS correction
+ atom     4  Ge  :    -0.00000000    0.00000000   -0.00000000   HF force
+                 :     0.00000000   -0.00000000    0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     5  Ge  :    -0.00000000    0.00000000   -0.00000000   HF force
+                 :     0.00000000   -0.00000000    0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     6  Ge  :    -0.00000000   -0.00000000   -0.00000000   HF force
+                 :     0.00000000   -0.00000000    0.00000000   core correction
+                 :    -0.00000000    0.00000000    0.00000000   IBS correction
+ atom     7   N  :    -0.00000000   -0.00000000    0.04576875   HF force
+                 :     0.00000000    0.00000000   -0.04225526   core correction
+                 :     0.00000000    0.00000000   -0.00364008   IBS correction
+ atom     8   N  :     0.03737003   -0.02157560   -0.01525625   HF force
+                 :    -0.03450128    0.01991932    0.01408509   core correction
+                 :    -0.00297212    0.00171595    0.00121336   IBS correction
+ atom     9   N  :    -0.03737003   -0.02157560   -0.01525625   HF force
+                 :     0.03450128    0.01991932    0.01408509   core correction
+                 :     0.00297212    0.00171595    0.00121336   IBS correction
+ atom    10   N  :    -0.00000000    0.04315119   -0.01525625   HF force
+                 :     0.00000000   -0.03983864    0.01408509   core correction
+                 :     0.00000000   -0.00343190    0.00121336   IBS correction
+ atom    11   N  :    -0.03737003    0.02157560    0.01525625   HF force
+                 :     0.03450128   -0.01991932   -0.01408509   core correction
+                 :     0.00297212   -0.00171595   -0.00121336   IBS correction
+ atom    12   N  :     0.00000000    0.00000000   -0.04576875   HF force
+                 :    -0.00000000   -0.00000000    0.04225526   core correction
+                 :    -0.00000000   -0.00000000    0.00364008   IBS correction
+ atom    13   N  :     0.03737003    0.02157560    0.01525625   HF force
+                 :    -0.03450128   -0.01991932   -0.01408509   core correction
+                 :    -0.00297212   -0.00171595   -0.00121336   IBS correction
+ atom    14   N  :     0.00000000   -0.04315119    0.01525625   HF force
+                 :    -0.00000000    0.03983864   -0.01408509   core correction
+                 :    -0.00000000    0.00343190   -0.00121336   IBS correction
+ 
+********************************************************************************
+* Groundstate module stopped                                                   *
+********************************************************************************
+ 
+********************************************************************************
+* Structure-optimization module started                                        *
+********************************************************************************
+ Output level for this task is set to high
+ 
+ Maximum displacement tau_BFGS   is         :         0.3000
+ Maximum displacement tau_newton is         :         0.2000
+ Maximum force target reached already at the initial configuration
+ 
+********************************************************************************
+* Structure-optimization module stopped                                        *
+********************************************************************************
+ 
+--------------------------------------------------------------------------------
+- Timings (seconds)                                                            -
+--------------------------------------------------------------------------------
+ Initialisation                             :         8.74
+ Hamiltonian and overlap matrix set up      :       361.08
+ First-variational secular equation         :       670.90
+ Calculation of charge-density              :       651.64
+ Calculation of potential                   :       388.13
+ Muffin-tin manipulations                   :        64.12
+ APW matching                               :        21.11
+ Disk reads/writes                          :       103.30
+ Mixing efforts                             :         0.16
+ Calculation of force                       :       524.10
+ Solver of Dirac eqn.                       :         1.40
+ Solver of rel. Schroedinger eqn.           :         5.72
+ Total time spent in radial solvers         :         7.12
+ 
+ Total time spent (seconds)                 :      3025.47
+================================================================================
+| EXCITING NEON stopped                                                        =
+================================================================================

@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<input>
+	<title>_home_bepdansp_exciting_sven_regen_new_species_path_GGA_PBE_precision_0_8_rmt_scaling_0_95_8_O8Po4</title>
+	<structure
+	   autormt="true"
+	   autormtscaling="0.95"
+	   speciespath="/home/bepdansp/exciting/sven_regen/n-dep">
+		<crystal>
+			<basevect>10.506877252919283 0.0 0.0</basevect>
+			<basevect>0.0 10.506877252919283 0.0</basevect>
+			<basevect>0.0 0.0 10.506877252919283</basevect>
+		</crystal>
+		<species speciesfile="O.xml">
+			<atom coord="0.25 0.25 0.25"> </atom>
+			<atom coord="0.75 0.75 0.25"> </atom>
+			<atom coord="0.75 0.25 0.75"> </atom>
+			<atom coord="0.25 0.75 0.75"> </atom>
+			<atom coord="0.25 0.25 0.75"> </atom>
+			<atom coord="0.75 0.75 0.75"> </atom>
+			<atom coord="0.25 0.75 0.25"> </atom>
+			<atom coord="0.75 0.25 0.25"> </atom>
+		</species>
+		<species speciesfile="Po.xml">
+			<atom coord="0.0 0.0 0.0"> </atom>
+			<atom coord="0.0 0.5 0.5"> </atom>
+			<atom coord="0.5 0.0 0.5"> </atom>
+			<atom coord="0.5 0.5 0.0"> </atom>
+		</species>
+	</structure>
+	<groundstate
+	   APWprecision="0.8"
+	   ValenceRelativity="iora*"
+	   do="fromscratch"
+	   epschg="1d-7"
+	   epsengy="1d-7"
+	   epspot="1d-4"
+	   gmaxvr="30"
+	   lmaxapw="10"
+	   lmaxmat="10"
+	   lmaxvr="10"
+	   maxscl="50"
+	   mixer="msec"
+	   nempty="20"
+	   ngridk="10 10 10"
+	   nwrite="10"
+	   outputlevel="high"
+	   stype="Fermi Dirac"
+	   swidth="0.003675"
+	   useAPWprecision="true"
+	   xctype="GGA_PBE">
+	</groundstate>
+	<properties>
+		<bandstructure>
+			<plot1d>
+				<path steps="100">
+					<point coord="0.0 0.0 0.0" label="G"> </point>
+					<point coord="0.0 0.5 0.0" label="X"> </point>
+					<point coord="0.5 0.5 0.0" label="M"> </point>
+					<point coord="0.0 0.0 0.0" label="G"> </point>
+					<point coord="0.5 0.5 0.5" label="R"> </point>
+					<point
+					   breakafter="true"
+					   coord="0.0 0.5 0.0"
+					   label="X">
+					</point>
+					<point coord="0.5 0.5 0.0" label="M"> </point>
+					<point coord="0.5 0.5 0.5" label="R"> </point>
+				</path>
+			</plot1d>
+		</bandstructure>
+		<dos
+		   ngrdos="300"
+		   nsmdos="2"
+		   nwdos="1000"
+		   winddos="-0.3 0.3">
+		</dos>
+	</properties>
+</input>

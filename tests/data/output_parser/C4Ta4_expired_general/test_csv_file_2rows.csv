@@ -1,0 +1,3 @@
+compound_name,k_point_density,rel_setting,basis_size,num_setting,functional,expansion,total_energy,total_energy_corrected,HOMO_LUMO_gap,gap_bandstructure,gamma_gap,volume,time_day,path,min_atom,max_atom,num_atoms,binary_precision
+C4Ta4,8,atomic_zora,minimal,light,pbe,expansion_None,-1753052.33145366,-1753052.37929678,0.00621745,2000000.0,1.9599545011770996,88.29946767700004,00_44_59__06_10_2020,tests/data/test/expansion_None/pbe/light/minimal/atomic_zora/8/C4Ta4/submission_C4Ta4.sh,73,6,8,0
+Be4S4,8,atomic_zora,minimal,light,pbe,expansion_None,-45108.863032478,-45108.8630324763,4.35816081,4.35816081,4.358175585662658,116.42873338700001,00_44_59__06_10_2020,tests/data/test/expansion_None/pbe/light/minimal/atomic_zora/8/Be4S4/submission_Be4S4.sh,4,16,8,0

@@ -1,0 +1,1 @@
+tests/data/test/expansion_1dot05/pbe/tight/minimal/atomic_zora/4/RhSi/

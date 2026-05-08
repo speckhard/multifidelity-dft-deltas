@@ -1,0 +1,66 @@
+================================================================================
+JobID = 5706779
+User = bepdansp, Account = bep00098
+Partition = medium40, Nodelist = gcn1418
+================================================================================
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ 
+Info(bandstr):
+ band structure plot written to BAND.OUT
+ 
+ Fermi energy is at zero in plot
+ 
+ Vertex location lines written to BANDLINES.OUT
+ 
+ ### Using specified input file: input.xml
+ 
+Info(dos):
+ 
+   Total density of states written to TDOS.OUT
+ 
+   Fermi energy is at zero in plot
+ 
+   DOS units are states/Hartree/unit cell
+ 
+============ Job Information ===================================================
+Submitted: 2024-05-17T00:29:29
+Started: 2024-05-17T00:29:44
+Ended: 2024-05-17T01:29:18
+Elapsed: 60 min, Limit: 2880 min, Difference: 2820 min
+CPUs: 80, Nodes: 1
+Estimated NPL: 5.9562
+================================================================================

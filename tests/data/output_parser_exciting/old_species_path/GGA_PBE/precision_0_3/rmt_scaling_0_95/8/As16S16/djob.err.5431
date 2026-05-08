@@ -1,0 +1,14 @@
+Module for Intel Compilers and Libraries 2019.5 loaded.
+Module for Intel-MPI (version 2018.5) loaded.
+cp: cannot create regular file ‘./As.xml’: File exists
+mv: cannot move ‘As.xml’ to ‘As_ini.xml’: No such file or directory
+cp: cannot create regular file ‘./S.xml’: File exists
+mv: cannot move ‘S.xml’ to ‘S_ini.xml’: No such file or directory
+slurmstepd: error: Detected 1 oom_kill event in StepId=682244.0. Some of the step tasks have been OOM Killed.
+srun: error: gcn2198: task 0: Out Of Memory
+srun: Terminating StepId=682244.0
+[mpiexec@gcn2198] HYDT_bscu_wait_for_completion (../../tools/bootstrap/utils/bscu_wait.c:151): one of the processes terminated badly; aborting
+[mpiexec@gcn2198] HYDT_bsci_wait_for_completion (../../tools/bootstrap/src/bsci_wait.c:36): launcher returned error waiting for completion
+[mpiexec@gcn2198] HYD_pmci_wait_for_completion (../../pm/pmiserv/pmiserv_pmci.c:540): launcher returned error waiting for completion
+[mpiexec@gcn2198] main (../../ui/mpich/mpiexec.c:1157): process manager error waiting for completion
+slurmstepd: error: Detected 1 oom_kill event in StepId=682244.batch. Some of the step tasks have been OOM Killed.

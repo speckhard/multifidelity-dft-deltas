@@ -1,0 +1,25 @@
+================================================================================
+JobID = 5607304
+User = bepdansp, Account = bep00098
+Partition = standard96, Nodelist = gcn2381
+================================================================================
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+============ Job Information ===================================================
+Submitted: 2024-03-20T01:03:44
+Started: 2024-03-20T05:32:21
+Ended: 2024-03-20T05:35:28
+Elapsed: 4 min, Limit: 720 min, Difference: 716 min
+CPUs: 192, Nodes: 1
+Estimated NPL: .7264
+================================================================================

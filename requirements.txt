@@ -1,0 +1,32 @@
+# Core scientific stack
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+
+# Machine learning
+scikit-learn
+torch
+torch-geometric
+xgboost
+joblib
+
+# Configuration / experiment tracking
+absl-py
+hydra-core
+omegaconf
+pyyaml
+tqdm
+wandb
+
+# Materials science / DFT IO
+ase==3.22.0
+pymatgen
+spglib
+mendeleev
+excitingtools==1.6.0
+nomad-dos-fingerprints
+
+# Test / dev
+pytest

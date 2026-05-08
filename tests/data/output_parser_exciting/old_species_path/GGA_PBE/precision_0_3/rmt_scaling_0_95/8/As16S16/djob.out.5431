@@ -1,0 +1,49 @@
+================================================================================
+JobID = 682244
+User = bepdansp, Account = bep00098
+Partition = standard96:el7, Nodelist = gcn2198
+================================================================================
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+ Warning: large ylmg array of    4656.07209777832      Mb
+ Warning: large sfacg array of    1231.35791015625      Mb
+============ Job Information ===================================================
+Submitted: 2024-07-11T16:31:32
+Started: 2024-07-12T14:43:38
+Ended: 2024-07-12T14:45:27
+Elapsed: 2 min, Limit: 240 min, Difference: 238 min
+CPUs: 192, Nodes: 1
+Estimated Consumption: 6.40 core-hours
+================================================================================

@@ -1,0 +1,2 @@
+tests/data/test/expansion_None/pbe/light/minimal/atomic_zora/8/C4Ta4/submission_C4Ta4.sh
+tests/data/test/expansion_None/pbe/light/minimal/atomic_zora/8/Be4S4/submission_Be4S4.sh

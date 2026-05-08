@@ -1,0 +1,38 @@
+# conf/settings_only_config.yaml
+# Config for the SettingsOnlyGNN ablation model.
+# Uses only atomic structure + precision settings (no cheap DFT results).
+
+defaults:
+  - _self_
+
+# --- Model Type ---
+model_type: "settings_only"
+
+# --- WandB Settings ---
+wandb_project: "egnn-settings-only"
+wandb_group: "default_experiment"
+
+# --- Paths ---
+data_file: "/u/dansp/egnn/relaxation_data_with_kpoints/data/delta_combined_relaxations_11_32_11__1_1_2026_egnn_data.pt"
+job_name: "settings_only_gnn_run"
+
+# --- Model Architecture ---
+model:
+  num_layers: 4
+  hidden_features: 64
+  max_z: 120
+  # Only precision settings needed (no num_cheap_dft_inputs or num_geo_inputs)
+  num_precision_settings: 13  # 12-dim bp one-hot + 1 k-density scalar (bp=11 fix)
+
+# --- Training Hyperparameters ---
+training:
+  epochs: 800
+  batch_size: 32
+  learning_rate: 1e-3
+
+# --- Loss Weights ---
+weights:
+  delta_e: 1.0
+  delta_gap: 1.0
+  delta_r: 1.0
+  delta_geo: 1.0

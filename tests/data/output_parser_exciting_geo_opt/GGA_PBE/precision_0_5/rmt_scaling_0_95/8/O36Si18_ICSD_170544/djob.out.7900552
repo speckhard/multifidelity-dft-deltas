@@ -1,0 +1,44 @@
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+ Warning: large ylmg array of    3034.92393493652      Mb
+ Warning: large sfacg array of    1354.42886352539      Mb
+============ Job Information ===================================================
+Submitted: 2024-06-13T00:10:04
+Started: 2024-07-15T04:46:24
+Ended: 2024-07-15T16:46:33
+Elapsed: 721 min, Limit: 720 min, Difference: -1 min
+(HT-)CPUs: 192, Nodes: 1
+Estimated core-h: 1152.4278
+================================================================================

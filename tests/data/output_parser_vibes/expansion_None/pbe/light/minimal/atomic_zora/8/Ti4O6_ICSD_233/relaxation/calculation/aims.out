@@ -1,0 +1,200 @@
+  this material is metallic within the approximate finite broadening function (occupation_type)
+  applied to determine the occupation numbers.
+
+  | Chemical Potential                          :    -4.96949989 eV
+  | Note that, for insulating systems, the printed 'chemical potential' value is not uniquely defined.
+  | It can be anywhere in the energy gap, as long as it correctly separates occupied and unoccupied states.
+  | In systems with a gap, the physically relevant chemical potential is the VBM or HOMO.
+
+  Self-consistency cycle converged.
+
+  +-------------------------------------------------------------------+
+  |              Analytical stress tensor - Symmetrized               |
+  |                  Cartesian components [eV/A**3]                   |
+  +-------------------------------------------------------------------+
+  |                x                y                z                |
+  |                                                                   |
+  |  x         0.00002388      -0.00003401       0.00000674           |
+  |  y        -0.00003401      -0.00001884       0.00001301           |
+  |  z         0.00000674       0.00001301       0.00000779           |
+  |                                                                   |
+  |  Pressure:      -0.00000428   [eV/A**3]                           |
+  |                                                                   |
+  +-------------------------------------------------------------------+
+  Removing unitary transformations (pure translations, rotations) from forces on atoms.
+  Atomic forces before filtering:
+  | Net force on center of mass :   0.201560E-07  0.202019E-07  0.102176E-07 eV/A
+  Atomic forces after filtering:
+  | Net force on center of mass :  -0.348449E-18  0.174225E-18  0.174225E-18 eV/A
+
+  Energy and forces in a compact form:
+  | Total energy uncorrected      :         -0.105492860989833E+06 eV
+  | Total energy corrected        :         -0.105492941306309E+06 eV  <-- do not rely on this value for anything but (periodic) metals
+  | Electronic free energy        :         -0.105493021622785E+06 eV
+  Total atomic forces (unitary forces cleaned) [eV/Ang]:
+  |    1         -0.137250804105409E-03         -0.370612393768332E-03          0.148092608183555E-03
+  |    2          0.454047008236910E-03         -0.303854887940609E-03         -0.419964671677551E-03
+  |    3         -0.732096990669316E-03          0.570733409181516E-03         -0.136479755206722E-03
+  |    4          0.137245526543210E-03          0.370609395939831E-03         -0.148094299503928E-03
+  |    5         -0.454051407659147E-03          0.303850736541221E-03          0.419963830492203E-03
+  |    6          0.732094023593000E-03         -0.570737282990304E-03          0.136476734020876E-03
+  |    7         -0.204240322106557E-03         -0.995990488189848E-03         -0.788439494692569E-03
+  |    8         -0.158963663770118E-02          0.108837457926375E-02         -0.281461298517094E-03
+  |    9          0.204237053791358E-03          0.996018757726987E-03          0.788452263123839E-03
+  |   10          0.158965255007713E-02         -0.108839182576421E-02          0.281454083777390E-03
+
+  Removing unitary transformations (pure translations, rotations) from forces on atoms.
+  Atomic forces before filtering:
+  | Net force on center of mass :  -0.348449E-18  0.174225E-18  0.174225E-18 eV/A
+  Atomic forces after filtering:
+  | Net force on center of mass :   0.000000E+00 -0.174225E-18  0.174225E-18 eV/A
+ ------------------------------------------------------------------------
+ Atomic structure that was used in the preceding time step of the wrapper
+                         x [A]             y [A]             z [A]
+  lattice_vector         5.55532781        0.10342597        0.07142704
+  lattice_vector         3.13272106        4.58894572        0.07142704
+  lattice_vector         3.13272106        1.69196695        4.26623633
+
+            atom         6.85096882        4.77221358        1.17369965  O
+            atom         6.08791354        4.20052118        4.04725804  O
+            atom         7.74746502        2.19985786        2.49495055  O
+            atom         4.96980111        1.61212506        3.23539077  O
+            atom         5.73285639        2.18381746        0.36183239  O
+            atom         4.07330491        4.18448078        1.91413987  O
+            atom         4.11730714        2.22373697        1.53573579  Ti
+            atom         1.79307782        0.96843235        0.66880942  Ti
+            atom         7.70346279        4.16060167        2.87335463  Ti
+            atom        10.02769210        5.41590629        3.74028100  Ti
+ ------------------------------------------------------------------------
+  @ DRIVER MODE: Message from server: STATUS      
+  @ DRIVER MODE: Message from server: GETFORCE    
+  @ DRIVER MODE: Returning v,forces,stress 
+
+------------------------------------------------------------------------------
+  Final output of selected total energy values:
+
+  The following output summarizes some interesting total energy values
+  at the end of a run (AFTER all relaxation, molecular dynamics, etc.).
+
+  | Total energy of the DFT / Hartree-Fock s.c.f. calculation      :        -105492.860989833 eV
+  | Final zero-broadening corrected energy (caution - metals only) :        -105492.941306309 eV
+  | For reference only, the value of 1 Hartree used in FHI-aims is :             27.211384500 eV
+  | For reference only, the overall average (free atom contribution
+  | + realspace contribution) of the electrostatic potential after
+  | s.c.f. convergence is                                          :            -18.423936958 eV
+
+  Before relying on these values, please be sure to understand exactly which
+  total energy value is referred to by a given number. Different objects may
+  all carry the same name 'total energy'. Definitions:
+
+  Total energy of the DFT / Hartree-Fock s.c.f. calculation:
+  | Note that this energy does not include ANY quantities calculated after the
+  | s.c.f. cycle, in particular not ANY RPA, MP2, etc. many-body perturbation terms.
+
+  Final zero-broadening corrected energy:
+  | For metallic systems only, a broadening of the occupation numbers at the Fermi
+  | level can be extrapolated back to zero broadening by an electron-gas inspired
+  | formula. For all systems that are not real metals, this value can be
+  | meaningless and should be avoided.
+
+------------------------------------------------------------------------------
+  Methods described in the following list of references were used in this FHI-aims run.
+  If you publish the results, please make sure to cite these reference if they apply.
+  FHI-aims is an academic code, and for our developers (often, Ph.D. students
+  and postdocs), scientific credit in the community is essential.
+  Thank you for helping us!
+
+  For any use of FHI-aims, please cite:
+
+    Volker Blum, Ralf Gehrke, Felix Hanke, Paula Havu, Ville Havu,
+    Xinguo Ren, Karsten Reuter, and Matthias Scheffler
+    'Ab initio molecular simulations with numeric atom-centered orbitals'
+    Computer Physics Communications 180, 2175-2196 (2009)
+    http://doi.org/10.1016/j.cpc.2009.06.022
+
+
+  For the analytical stress tensor used in your run, please cite:
+
+    Franz Knuth, Christian Carbogno, Viktor Atalla, Volker Blum, Matthias Scheffler
+    'All-electron formalism for total energy strain derivatives and
+    stress tensor components for numeric atom-centered orbitals'
+    Computer Physics Communications 190, 33-50 (2015).
+    http://doi.org/10.1016/j.cpc.2015.01.003
+
+
+  The provided symmetry information was generated with SPGlib:
+
+    Atsushi Togo, Yusuke Seto, Dimitar Pashov
+    SPGlib 1.7.3 obtained from http://spglib.sourceforge.net
+    Copyright (C) 2008 Atsushi Togo
+
+
+  The ELSI infrastructure was used in your run to solve the Kohn-Sham electronic structure.
+  Please check out http://elsi-interchange.org to learn more.
+  If scalability is important for your project, please acknowledge ELSI by citing:
+
+    V. W-z. Yu, F. Corsetti, A. Garcia, W. P. Huhn, M. Jacquelin, W. Jia,
+    B. Lange, L. Lin, J. Lu, W. Mi, A. Seifitokaldani, A. Vazquez-Mayagoitia,
+    C. Yang, H. Yang, and V. Blum
+    'ELSI: A unified software interface for Kohn-Sham electronic structure solvers'
+    Computer Physics Communications 222, 267-285 (2018).
+    http://doi.org/10.1016/j.cpc.2017.09.007
+
+
+  For the real-space grid partitioning and parallelization used in this calculation, please cite:
+
+    Ville Havu, Volker Blum, Paula Havu, and Matthias Scheffler,
+    'Efficient O(N) integration for all-electron electronic structure calculation'
+    'using numerically tabulated basis functions'
+    Journal of Computational Physics 228, 8367-8379 (2009).
+    http://doi.org/10.1016/j.jcp.2009.08.008
+
+  Of course, there are many other important community references, e.g., those cited in the
+  above references. Our list is limited to references that describe implementations in the
+  FHI-aims code. The reason is purely practical (length of this list) - please credit others as well.
+
+ * A warning was issued further up regarding the accuracy of onsite integrals.
+   An integral with a negative eigenvalue was among the flagged integrals.
+   In most standard situations, this warning is probably harmless.
+   If needed, this can be verified by adjusting the radial_multiplier flag.
+
+------------------------------------------------------------
+          Leaving FHI-aims.
+          Date     :  20221106, Time     :  012007.615
+
+          Computational steps:
+          | Number of self-consistency cycles          :          259
+          | Number of SCF (re)initializations          :           14
+
+          Detailed time accounting                     :  max(cpu_time)    wall_clock(cpu1)
+          | Total time                                  :       82.691 s          82.976 s
+          | Preparation time                            :        0.151 s           0.152 s
+          | Boundary condition initalization            :        1.077 s           1.082 s
+          | Grid partitioning                           :        0.322 s           0.322 s
+          | Preloading free-atom quantities on grid     :        0.808 s           0.811 s
+          | Free-atom superposition energy              :        0.096 s           0.097 s
+          | Total time for integrations                 :        6.892 s           6.886 s
+          | Total time for solution of K.-S. equations  :       18.413 s          18.467 s
+          | Total time for density & force components   :       17.554 s          17.582 s
+          | Total time for mixing & preconditioning     :       10.120 s          10.150 s
+          | Total time for Hartree multipole update     :        0.421 s           0.410 s
+          | Total time for Hartree multipole sum        :       20.612 s          20.669 s
+          | Total time for total energy evaluation      :        0.261 s           0.255 s
+          | Total time NSC force correction             :        3.101 s           3.110 s
+          | Total time for scaled ZORA corrections      :        0.000 s           0.000 s
+
+          Partial memory accounting:
+          | Residual value for overall tracked memory usage across tasks:     0.000000 MB (should be 0.000000 MB)
+          | Peak values for overall tracked memory usage:
+          |   Minimum:        9.408 MB (on task  8 after allocating d_wave)
+          |   Maximum:       10.279 MB (on task 24 after allocating d_wave)
+          |   Average:        9.743 MB
+          | Largest tracked array allocation:
+          |   Minimum:        1.816 MB (hessian_basis_wave on task  8)
+          |   Maximum:        2.000 MB (hessian_basis_wave on task 24)
+          |   Average:        1.890 MB
+          Note:  These values currently only include a subset of arrays which are explicitly tracked.
+          The "true" memory usage will be greater.
+
+          Have a nice day.
+------------------------------------------------------------

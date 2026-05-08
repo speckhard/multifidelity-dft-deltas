@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<input>
+	<title>tests_data_test_pbe_precision_0_3_rmt_scaling_0_8_4_RhSi</title>
+	<structure
+	   autormt="true"
+	   autormtscaling="0.8"
+	   speciespath="None">
+		<crystal>
+			<basevect>1.8897261246257702 0.0 0.0</basevect>
+			<basevect>0.0 1.8897261246257702 0.0</basevect>
+			<basevect>0.0 0.0 1.8897261246257702</basevect>
+		</crystal>
+		<species speciesfile="Rh.xml">
+			<atom coord="0.0 0.0 0.0"> </atom>
+		</species>
+		<species speciesfile="Si.xml">
+			<atom coord="0.0 0.0 0.0"> </atom>
+		</species>
+	</structure>
+	<groundstate APWprecision="0.3" useAPWprecision="true"> </groundstate>
+	<properties>
+		<bandstructure>
+			<plot1d>
+				<path steps="100">
+					<point coord="0.0 0.0 0.0" label="G"> </point>
+					<point coord="0.0 0.5 0.0" label="X"> </point>
+					<point coord="0.5 0.5 0.0" label="M"> </point>
+					<point coord="0.0 0.0 0.0" label="G"> </point>
+					<point coord="0.5 0.5 0.5" label="R"> </point>
+					<point
+					   breakafter="true"
+					   coord="0.0 0.5 0.0"
+					   label="X">
+					</point>
+					<point coord="0.5 0.5 0.0" label="M"> </point>
+					<point coord="0.5 0.5 0.5" label="R"> </point>
+				</path>
+			</plot1d>
+		</bandstructure>
+		<dos
+		   ngrdos="300"
+		   nsmdos="2"
+		   nwdos="1000"
+		   winddos="-0.3 0.3">
+		</dos>
+	</properties>
+</input>

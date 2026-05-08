@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<input>
+  <title>_scratch_projects_bep00098_aflow_binaries_exciting_0_1000__GGA_PBE_precision_0_3_rmt_scaling_0_95_2_O8Zr4 (optimized)</title>
+  <structure speciespath="/home/bepdansp/exciting/sven_regen/n-dep">
+    <crystal>
+      <basevect>   9.831867081       0.000000000       0.000000000</basevect>
+      <basevect>   0.000000000       9.733412350       0.000000000</basevect>
+      <basevect>   0.000000000       1.605318779       9.915923705</basevect>
+    </crystal>
+    <species speciesfile="O.xml" rmt="1.7140">
+      <atom coord="0.4167016437      0.1194336905      0.0593721335"/>
+      <atom coord="0.9167016437      0.4196940811      0.0389917636"/>
+      <atom coord="0.5009555300      0.4196940811      0.5389917636"/>
+      <atom coord="0.0009555300      0.1194336905      0.5593721335"/>
+      <atom coord="0.7263289224      0.8190563191      0.2949195895"/>
+      <atom coord="0.2263289224      0.7200714526      0.8034443116"/>
+      <atom coord="0.1913282512      0.7200714526      0.3034443076"/>
+      <atom coord="0.6913282512      0.8190563191      0.7949195895"/>
+    </species>
+    <species speciesfile="Zr.xml" rmt="1.9525">
+      <atom coord="0.0000000000      0.0000000000      0.0000000000"/>
+      <atom coord="0.5000000010      0.5391277717      0.0983638971"/>
+      <atom coord="0.9176571727      0.5391277717      0.5983638971"/>
+      <atom coord="0.4176571727      0.0000000000      0.5000000000"/>
+    </species>
+  </structure>
+  <groundstate>
+  </groundstate>
+
+</input>

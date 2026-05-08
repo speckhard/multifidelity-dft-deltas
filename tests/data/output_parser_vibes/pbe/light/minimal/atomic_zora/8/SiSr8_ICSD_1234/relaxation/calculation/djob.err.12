@@ -1,0 +1,11 @@
+Module for Intel Compilers and Libraries 2018.5 loaded.
+Module for Intel(R) MPI Library 2018.4 loaded.
+Module for Anaconda3 2019.03 loaded.
+/home/bepdansp/.local/lib/python3.7/site-packages/pandas/compat/_optional.py:138: UserWarning: Pandas requires version '2.7.0' or newer of 'numexpr' (version '2.6.9' currently installed).
+  warnings.warn(msg, UserWarning)
+/sw/tools/python/anaconda3/2019.03/skl/lib/python3.7/site-packages/dask/config.py:168: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  data = yaml.load(f.read()) or {}
+/sw/tools/python/anaconda3/2019.03/skl/lib/python3.7/site-packages/distributed/config.py:20: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  defaults = yaml.load(f)
+/home/bepdansp/.local/lib/python3.7/site-packages/ase/utils/__init__.py:62: FutureWarning: Please use atoms.cell.reciprocal()
+  warnings.warn(warning)

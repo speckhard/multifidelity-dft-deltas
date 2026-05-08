@@ -1,0 +1,10 @@
+#=======================================================
+# FHI-aims file: /home/dts/Documents/theory/errorbar_modelling/tests/data/test/pbe/light/tier1/atomic_zora/4/RhSi_ICSD_988/bandstructure_test/geometry.in
+# Created using the Atomic Simulation Environment (ASE)
+# Mon May 22 15:37:35 2023
+#=======================================================
+lattice_vector 1.0000000000000000 0.0000000000000000 0.0000000000000000 
+lattice_vector 0.0000000000000000 1.0000000000000000 0.0000000000000000 
+lattice_vector 0.0000000000000000 0.0000000000000000 1.0000000000000000 
+atom_frac 0.0000000000000000 0.0000000000000000 0.0000000000000000 Si
+atom_frac 0.0000000000000000 0.0000000000000000 0.0000000000000000 Rh

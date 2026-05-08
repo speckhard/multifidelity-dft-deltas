@@ -1,0 +1,21 @@
+Error(seceqnfv): diagonalisation failed
+ ZHPGVX returned INFO =       88
+ The leading minor of the overlap matrix of order       28
+  is not positive definite
+ Order of overlap matrix :       60
+ 
+ 
+Error(seceqnfv): diagonalisation failed
+ ZHPGVX returned INFO =       86
+ The leading minor of the overlap matrix of order       27
+  is not positive definite
+ Order of overlap matrix :       59
+ 
+============ Job Information ===================================================
+Submitted: 2024-03-20T01:03:37
+Started: 2024-03-20T05:32:21
+Ended: 2024-03-20T05:32:34
+Elapsed: 1 min, Limit: 720 min, Difference: 719 min
+CPUs: 192, Nodes: 1
+Estimated NPL: .0461
+================================================================================

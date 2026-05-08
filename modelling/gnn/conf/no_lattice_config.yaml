@@ -1,0 +1,35 @@
+# conf/no_lattice_config.yaml
+# Config for EGNN without lattice parameter predictions.
+# Uses the DeltaAttentionGNN architecture but sets lattice loss weight to 0,
+# so the model only learns delta-energy, delta-bandgap, delta-volume, and delta-positions.
+
+defaults:
+  - _self_
+
+model_type: "attention"
+
+wandb_project: "egnn-attention"
+wandb_group: "no_lattice_sweep_v1"
+
+data_file: "/u/dansp/egnn/relaxation_data_with_kpoints/data/delta_combined_relaxations_23_51__25_1_2026_egnn_data.pt"
+job_name: "no_lattice_attention_run"
+
+model:
+  num_layers: 4
+  hidden_features: 64
+  max_z: 120
+  num_cheap_dft_inputs: 12
+  num_precision_settings: 13  # 12-dim bp one-hot + 1 k-density scalar (bp=11 fix)
+  num_geo_inputs: 7  # Architecture unchanged, loss masking handles the rest
+
+training:
+  epochs: 800
+  batch_size: 32
+  learning_rate: 1e-3
+
+weights:
+  delta_e: 1.0
+  delta_gap: 1.0
+  delta_r: 1.0
+  delta_vol: 1.0
+  delta_lat: 0.0   # Disables lattice parameter learning

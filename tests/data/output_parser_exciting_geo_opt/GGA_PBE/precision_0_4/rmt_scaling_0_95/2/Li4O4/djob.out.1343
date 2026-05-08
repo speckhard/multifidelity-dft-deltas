@@ -1,0 +1,67 @@
+================================================================================
+JobID = 67402
+User = bepdansp, Account = bep00098
+Partition = medium40, Nodelist = gcn1212
+================================================================================
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ 
+   Error(checkmt): muffin-tin spheres overlap between
+                   species    2 atom    1 and
+                   species    2 atom    4
+ 
+   Sum of muffin-tin radii :    2.9158    
+   Distance between atoms  :    2.8942    
+ 
+   Please check, and possibly reduce, the input (or default) values
+   of the attribute ''rmt'' inside the element ''species'' 
+   for species    2 and    2
+ 
+   See link: http://exciting-code.org/ref:structure#species 
+ 
+ 
+   Error(checkmt): muffin-tin spheres overlap between
+                   species    2 atom    1 and
+                   species    2 atom    4
+ 
+   Sum of muffin-tin radii :    2.9158    
+   Distance between atoms  :    2.8942    
+ 
+   Please check, and possibly reduce, the input (or default) values
+   of the attribute ''rmt'' inside the element ''species'' 
+   for species    2 and    2
+ 
+   See link: http://exciting-code.org/ref:structure#species 
+ 
+ 
+   Error(checkmt): muffin-tin spheres overlap between
+                   species    2 atom    1 and
+                   species    2 atom    4
+ 
+   Sum of muffin-tin radii :    2.9158    
+   Distance between atoms  :    2.8942    
+ 
+   Please check, and possibly reduce, the input (or default) values
+   of the attribute ''rmt'' inside the element ''species'' 
+   for species    2 and    2
+ 
+   See link: http://exciting-code.org/ref:structure#species 
+ 
+============ Job Information ===================================================
+Submitted: 2024-05-31T01:47:24
+Started: 2024-05-31T06:01:09
+Ended: 2024-05-31T06:40:20
+Elapsed: 40 min, Limit: 2880 min, Difference: 2840 min
+CPUs: 80, Nodes: 1
+Estimated Consumption: 53.33 core-hours
+================================================================================

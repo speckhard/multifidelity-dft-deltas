@@ -1,0 +1,114 @@
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ ### Using specified input file: input.xml
+ 
+Error(seceqnfv): diagonalisation failed
+ ZHPGVX returned INFO =     4140
+ The leading minor of the overlap matrix of order     1976
+  is not positive definite
+ Order of overlap matrix :     2164
+ 
+ 
+Error(seceqnfv): diagonalisation failed
+ ZHPGVX returned INFO =     4152
+ The leading minor of the overlap matrix of order     1982
+  is not positive definite
+ Order of overlap matrix :     2170
+ 
+ 
+Error(seceqnfv): diagonalisation failed
+ ZHPGVX returned INFO =     4180
+ The leading minor of the overlap matrix of order     1996
+  is not positive definite
+ Order of overlap matrix :     2184
+ 
+ 
+Error(seceqnfv): diagonalisation failed
+ ZHPGVX returned INFO =     4184
+ The leading minor of the overlap matrix of order     1998
+  is not positive definite
+ Order of overlap matrix :     2186
+ 
+ 
+Error(seceqnfv): diagonalisation failed
+ ZHPGVX returned INFO =     4184
+ The leading minor of the overlap matrix of order     1998
+  is not positive definite
+ Order of overlap matrix :     2186
+ 
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 0 PID 220362 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 1 PID 220363 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 2 PID 220364 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 5 PID 220367 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 6 PID 220368 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 7 PID 220369 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 8 PID 220370 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 9 PID 220371 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 10 PID 220372 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 11 PID 220373 RUNNING AT bcn1625
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+============ Job Information ===================================================
+Submitted: 2023-11-30T01:04:58
+Started: 2023-11-30T11:57:56
+Ended: 2023-11-30T12:10:18
+Elapsed: 13 min, Limit: 720 min, Difference: 707 min
+(HT-)CPUs: 192, Nodes: 1
+Estimated core-h: 19.7893

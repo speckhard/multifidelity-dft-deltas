@@ -1,0 +1,26 @@
+                                  
+================================= 
+Global information about the job: 
+================================= 
+  
+Job owner: dansp(77088)
+Job name:  submission_C4Ta4
+Node list: draco04
+Job start: Wed May  6 18:44:35 CEST 2020
+Job end:   Wed May  6 18:49:13 CEST 2020
+Work dir:  /u/dansp/gen_error_data/test_run/expansion_None/pbe/light/minimal/atomic_zora/8/C4Ta4/./
+Command:   /draco/u/dansp/gen_error_data/test_run/expansion_None/pbe/light/minimal/atomic_zora/8/C4Ta4/submission_C4Ta4.sh
+  
+  
+  
+================================================================================ 
+Information on jobsteps (Note: MaxRSS is per task, cf. "man sacct"): 
+================================================================================ 
+  
+       JobID    JobName NNodes NTasks  NCPUS     MaxRSS    Elapsed ExitCode 
+------------ ---------- ------ ------ ------ ---------- ---------- -------- 
+14607534.0   aims.2001+      1     32     32     97327K   00:04:38      0:0 
+  
+Maximum memory per node: 3.11446 GB
+CPU utilization: 98.6 %
+     

@@ -1,0 +1,16 @@
+#=======================================================
+# FHI-aims file: /home/bepdansp/aflow_binaries_vibes/pbe/light/minimal/zora/8/MgO_ICSD_60492/relaxation/geometry.in.next_step
+# Created using the Atomic Simulation Environment (ASE)
+# Tue Nov  1 18:24:51 2022
+
+# Additional information:
+#  Relaxed with BFGS, fmax=1.000 meV/AA
+#  nsteps = 5
+#  residual force  = 0.000001 meV/AA
+#  residual stress = 0.731306 meV/AA
+#=======================================================
+lattice_vector 3.1646387046180000 0.0000000000000000 0.0000000000010000 
+lattice_vector 1.5823193523090000 2.7404040696809999 0.0001633030250000 
+lattice_vector 1.5823193523090000 0.9136219867950000 2.5838352070330002 
+atom_frac 0.0000000000090000 0.0000000000000000 0.0000000000070000 Mg
+atom_frac 0.4999999999910000 0.5000000000000001 0.4999999999929999 O

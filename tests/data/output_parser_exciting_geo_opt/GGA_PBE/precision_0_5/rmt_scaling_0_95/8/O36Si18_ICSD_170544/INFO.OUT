@@ -1,0 +1,270 @@
+================================================================================
+| EXCITING NEON started                                                        =
+| version hash id: f868577a0d0429706a98ef6fdcd421e2d2c94c0c                    =
+|                                                                              =
+| compiler: ifort (IFORT) 19.0.5.281 20190815                                  =
+|                                                                              =
+| MPI version using     12 processor(s)                                        =
+| |  using MPI-2 features                                                      =
+|                                                                              =
+| Date (DD-MM-YYYY) : 15-07-2024                                               =
+| Time (hh:mm:ss)   : 04:47:05                                                 =
+|                                                                              =
+| All units are atomic (Hartree, Bohr, etc.)                                   =
+================================================================================
+ 
+********************************************************************************
+* Structural optimisation starting from atomic densities                       *
+********************************************************************************
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting initialization                                                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+ Lattice vectors (cartesian) :
+     15.3221072900      0.0000000000      0.0000000000
+     -0.3369538703     17.8857674900      0.0000000000
+     -7.5271461790     -0.0758980718     13.1554281000
+ 
+ Reciprocal lattice vectors (cartesian) :
+      0.4100731830      0.0077254580      0.2346762961
+      0.0000000000      0.3512952581      0.0020267400
+      0.0000000000      0.0000000000      0.4776116185
+ 
+ Unit cell volume                           :    3605.2141351025
+ Brillouin zone volume                      :       0.0688031845
+ 
+ Automatic determination of muffin-tin radii :
+     global rmt scale                       :       0.9500000000
+ 
+ Species :    1 (O)
+     parameters loaded from                 :    O.xml
+     name                                   :    oxygen
+     nuclear charge                         :      -8.00000000
+     electronic charge                      :       8.00000000
+     atomic mass                            :   29165.12203000
+     muffin-tin radius                      :       0.88250000
+     # of radial points in muffin-tin       :     600
+ 
+     atomic positions (lattice) :
+       1 :   0.21181007  0.16426361  0.20981373
+       2 :   0.87719048  0.49905592  0.87660645
+       3 :   0.54478945  0.83097009  0.54314088
+       4 :   0.70469372  0.16371787  0.20948110
+       5 :   0.37264517  0.49780919  0.87652631
+       6 :   0.03741621  0.83033817  0.54296251
+       7 :   0.21057973  0.67105413  0.21001453
+       8 :   0.87588663  0.00238239  0.87624230
+       9 :   0.54394726  0.33770104  0.54321914
+      10 :   0.54348584  0.83044771  0.04311663
+      11 :   0.21054417  0.16420922  0.70964015
+      12 :   0.87836670  0.49615781  0.37669678
+      13 :   0.03830126  0.83153651  0.04279580
+      14 :   0.70535645  0.16546878  0.70974674
+      15 :   0.37074090  0.49777760  0.37668596
+      16 :   0.54410706  0.33609498  0.04309782
+      17 :   0.21034365  0.66933245  0.70974518
+      18 :   0.87816481  0.00473265  0.37633744
+      19 :   0.20984311  0.66913039  0.45759910
+      20 :   0.87561435  0.00060431  0.12401390
+      21 :   0.54205145  0.33374553  0.79090753
+      22 :   0.21018600  0.16594634  0.45739737
+      23 :   0.87619947  0.49984267  0.12430771
+      24 :   0.54191655  0.83381619  0.79063366
+      25 :   0.70602819  0.16417160  0.45714729
+      26 :   0.37436898  0.49840162  0.12425618
+      27 :   0.04177618  0.83250819  0.79048829
+      28 :   0.54273978  0.83157822  0.29079130
+      29 :   0.20821166  0.16565855  0.95717960
+      30 :   0.87561598  0.49883223  0.62425542
+      31 :   0.54432834  0.33526498  0.29075498
+      32 :   0.20922502  0.66637407  0.95748170
+      33 :   0.87698013  0.00171149  0.62388066
+      34 :   0.03926245  0.83231998  0.29061497
+      35 :   0.70872225  0.16692867  0.95740915
+      36 :   0.37415023  0.49961003  0.62433082
+ 
+ Species :    2 (Si)
+     parameters loaded from                 :    Si.xml
+     name                                   :    silicon
+     nuclear charge                         :     -14.00000000
+     electronic charge                      :      14.00000000
+     atomic mass                            :   51196.73454000
+     muffin-tin radius                      :       0.91400000
+     # of radial points in muffin-tin       :     600
+ 
+     atomic positions (lattice) :
+       1 :   0.00000000  0.00000000  0.00000000
+       2 :   0.66714410  0.33402397  0.66709429
+       3 :   0.33397414  0.66733367  0.33377450
+       4 :   0.75101908  0.37498832  0.00031680
+       5 :   0.41726880  0.70816282  0.66679156
+       6 :   0.08433314  0.04133432  0.33343641
+       7 :   0.37490462  0.62378358  0.00034956
+       8 :   0.04172717  0.95764227  0.66662357
+       9 :   0.70857849  0.29046449  0.33331931
+      10 :   0.66721970  0.95710231  0.16690048
+      11 :   0.33372976  0.29082309  0.83361701
+      12 :   0.00072791  0.62402695  0.50044067
+      13 :   0.04145018  0.70834470  0.16689222
+      14 :   0.70801912  0.04167273  0.83355314
+      15 :   0.37457573  0.37464274  0.50053974
+      16 :   0.41803676  0.33344460  0.16700526
+      17 :   0.08408200  0.66679838  0.83355686
+      18 :   0.75091197  0.00015417  0.50003033
+ 
+ Total number of atoms per unit cell        :      54
+ 
+ Spin treatment                             :    spin-unpolarised
+ 
+ Number of Bravais lattice symmetries       :       2
+ Number of crystal symmetries               :       1
+ 
+ k-point grid                               :       8    6    8
+ Total number of k-points                   :     384
+ k-point set is reduced with crystal symmetries
+ 
+ R^MT_min * |G+k|_max (rgkmax)              :       5.11993200
+ APWprecision                               :       0.50000000
+ Species with R^MT_min                      :       1 (O)
+ Maximum |G+k| for APW functions            :       5.80162266
+ Maximum |G| for potential and density      :      30.00000000
+ Polynomial order for pseudochg. density    :       9
+ 
+ G-vector grid sizes                        :     150   180   150
+ Total number of G-vectors                  : 1643775
+ 
+ Maximum angular momentum used for
+     APW functions                          :      10
+     computing H and O matrix elements      :      10
+     potential and density                  :      10
+     inner part of muffin-tin               :       2
+ 
+ Total nuclear charge                       :    -540.00000000
+ Total electronic charge                    :     540.00000000
+ Total core charge                          :     108.00000000
+ Total valence charge                       :     432.00000000
+ 
+ Effective Wigner radius, r_s               :       1.16810773
+ 
+ Number of empty states                     :      20
+ Total number of valence states             :     237
+ 
+ Maximum Hamiltonian size                   :   14008
+ Maximum number of plane-waves              :   11920
+ Total number of local-orbitals             :    2088
+ 
+ Exchange-correlation type                  :      20
+     Perdew-Burke-Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996)
+     Generalised gradient approximation (GGA)
+ 
+ Smearing scheme                            :    Fermi-Dirac
+ Smearing width                             :       0.00367500
+ 
+ Using multisecant Broyden potential mixing
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Ending initialization                                                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+********************************************************************************
+* Groundstate module started                                                   *
+********************************************************************************
+ Output level for this task is set to high
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Self-consistent loop started                                                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Density and potential initialised from atomic data
+ 
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    1                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Total energy                               :     -8050.23856797
+ _______________________________________________________________
+ Fermi energy                               :         0.28269014
+ Kinetic energy                             :      7920.94024865
+ Coulomb energy                             :    -15269.41710042
+ Exchange energy                            :      -681.38270129
+ Correlation energy                         :       -20.37901491
+ Sum of eigenvalues                         :     -4232.17576489
+ Effective potential energy                 :    -12153.11601354
+ Coulomb potential energy                   :    -11246.88497026
+ xc potential energy                        :      -906.23104328
+ Hartree energy                             :      2773.75020023
+ Electron-nuclear energy                    :    -16794.38537072
+ Nuclear-nuclear energy                     :     -1248.78192993
+ Madelung energy                            :     -9645.97461529
+ Core-electron kinetic energy               :         0.00000000
+ 
+ DOS at Fermi energy (states/Ha/cell)       :       263.52838289
+ 
+ Electron charges :
+     core                                   :       108.00000000
+     core leakage                           :         0.02125392
+     valence                                :       432.00000000
+     interstitial                           :       205.19587426
+     charge in muffin-tin spheres :
+                  atom     1     O          :         4.29420834
+                  atom     2     O          :         4.29734715
+                  atom     3     O          :         4.29822119
+                  atom     4     O          :         4.60138101
+                  atom     5     O          :         4.60216938
+                  atom     6     O          :         4.60119518
+                  atom     7     O          :         5.28996021
+                  atom     8     O          :         5.28657986
+                  atom     9     O          :         5.28942566
+                  atom    10     O          :         4.47680204
+                  atom    11     O          :         4.47851669
+                  atom    12     O          :         4.47448167
+                  atom    13     O          :         4.59073275
+                  atom    14     O          :         4.59041966
+                  atom    15     O          :         4.59142192
+                  atom    16     O          :         4.48293899
+                  atom    17     O          :         4.48168423
+                  atom    18     O          :         4.48166311
+                  atom    19     O          :         4.48452289
+                  atom    20     O          :         4.48426406
+                  atom    21     O          :         4.48307098
+                  atom    22     O          :         4.48274088
+                  atom    23     O          :         4.48222167
+                  atom    24     O          :         4.48101976
+                  atom    25     O          :         4.58655715
+                  atom    26     O          :         4.58811741
+                  atom    27     O          :         4.58791101
+                  atom    28     O          :         4.29443622
+                  atom    29     O          :         4.29349349
+                  atom    30     O          :         4.29669547
+                  atom    31     O          :         5.27561062
+                  atom    32     O          :         5.28139145
+                  atom    33     O          :         5.27593584
+                  atom    34     O          :         4.60440585
+                  atom    35     O          :         4.60413691
+                  atom    36     O          :         4.60396872
+                  atom    37    Si          :         9.44709433
+                  atom    38    Si          :         9.44937880
+                  atom    39    Si          :         9.44862526
+                  atom    40    Si          :         9.29258811
+                  atom    41    Si          :         9.29244850
+                  atom    42    Si          :         9.29281141
+                  atom    43    Si          :         9.33003381
+                  atom    44    Si          :         9.33032443
+                  atom    45    Si          :         9.32968329
+                  atom    46    Si          :         9.29116686
+                  atom    47    Si          :         9.29143945
+                  atom    48    Si          :         9.29073654
+                  atom    49    Si          :         9.33022961
+                  atom    50    Si          :         9.33020384
+                  atom    51    Si          :         9.32987294
+                  atom    52    Si          :         9.44150118
+                  atom    53    Si          :         9.44411137
+                  atom    54    Si          :         9.44222659
+     total charge in muffin-tins            :       334.80412574
+     total charge                           :       540.00000000
+ 
+ Wall time (seconds)                        :     25310.12
+ 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ SCF iteration number :    2                                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -1,0 +1,14 @@
+low.py", line 42, in run
+    opt = ctx.opt
+  File "/home/bepdansp/.local/lib/python3.7/site-packages/vibes/relaxation/context.py", line 95, in opt
+    opt = optimize.BFGS(atoms=self.opt_atoms, logfile=logfile, **obj)
+  File "/home/bepdansp/.local/lib/python3.7/site-packages/vibes/relaxation/context.py", line 125, in opt_atoms
+    constr = FixSymmetry(self.atoms, symprec=self.symprec)
+  File "/home/bepdansp/.local/lib/python3.7/site-packages/ase/spacegroup/symmetrize.py", line 188, in __init__
+    refine_symmetry(atoms, symprec, self.verbose)  # refine initial symmetry
+  File "/home/bepdansp/.local/lib/python3.7/site-packages/ase/spacegroup/symmetrize.py", line 45, in refine_symmetry
+    std_cell = dataset['std_lattice']
+TypeError: 'NoneType' object is not subscriptable
+Bla
+Bla
+Bla

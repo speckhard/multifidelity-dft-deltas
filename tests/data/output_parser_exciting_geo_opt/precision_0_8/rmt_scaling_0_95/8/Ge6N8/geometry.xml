@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<input>
+  <title>_scratch_projects_bep00108_aflow_binaries_exciting_1000_1999__GGA_PBE_precision_0_8_rmt_scaling_0_95_8_Ge6N8_ICSD_156338</title>
+  <structure speciespath="/scratch/projects/bep00098/exciting/ndep_species_files">
+    <crystal>
+      <basevect>   11.10748135       0.000000000       0.000000000</basevect>
+      <basevect>   5.553740674       9.619361020       0.000000000</basevect>
+      <basevect>   5.553740674       3.206453673       9.069220544</basevect>
+    </crystal>
+    <species speciesfile="Ge.xml" rmt="1.9723">
+      <atom coord="0.0000000000      0.0000000000      0.0000000000"/>
+      <atom coord="0.7500000000      0.7500000000      0.7500000000"/>
+      <atom coord="0.3750000000      0.3750000000      0.8750000000"/>
+      <atom coord="0.8750000000      0.3750000000      0.3750000000"/>
+      <atom coord="0.3750000000      0.3750000000      0.3750000000"/>
+      <atom coord="0.3750000000      0.8750000000      0.3750000000"/>
+    </species>
+    <species speciesfile="N.xml" rmt="1.4717">
+      <atom coord="0.6167528470      0.6167528470      0.1497414591"/>
+      <atom coord="0.1497414591      0.6167528470      0.6167528470"/>
+      <atom coord="0.6167528470      0.6167528470      0.6167528470"/>
+      <atom coord="0.6167528470      0.1497414591      0.6167528470"/>
+      <atom coord="0.6002585409      0.1332471530      0.1332471530"/>
+      <atom coord="0.1332471530      0.1332471530      0.6002585409"/>
+      <atom coord="0.1332471530      0.1332471530      0.1332471530"/>
+      <atom coord="0.1332471530      0.6002585409      0.1332471530"/>
+    </species>
+  </structure>
+</input>

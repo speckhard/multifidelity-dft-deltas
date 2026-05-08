@@ -1,0 +1,4 @@
+tests/data/output_parser_vibes/expansion_None/pbe/light/minimal/atomic_zora/8/C4Ta4_ICSD_234/submission_C4Ta4.sh
+tests/data/output_parser_vibes/expansion_None/pbe/light/minimal/atomic_zora/8/Ti4O6_ICSD_233/submission_Ti4O6.sh
+tests/data/output_parser_vibes/expansion_None/lda/light/minimal/atomic_zora/8/Ti4O6_ICSD_326/submission_Ti4O6.sh
+tests/data/output_parser_vibes/expansion_None/lda/light/minimal/atomic_zora/8/C4Ta4_ICSD_325/submission_C4Ta4.sh

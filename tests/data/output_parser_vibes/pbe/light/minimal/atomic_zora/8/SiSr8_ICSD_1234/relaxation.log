@@ -1,0 +1,123 @@
+[vibes.run]    run relaxation workflow with settings from relaxation.in
+
+[relaxation]   ** /home/bepdansp/aflow_binaries_vibes_1000_1999/pbe/tight/tier2/atomic_zora/8/Si4Sr8_ICSD_422/relaxation/trajectory.son does not exist, nothing to prepare
+[calculator]   Update aims k_grid with kpt density of 8 to [10, 7, 6]
+[calculator]   .. add `output_level: MD_light` to parameters (default)
+* Message from file vibes/helpers/socketio.py, line 86, function get_port:
+--> Port 12345 in use, changing to the next free port
+
+[calculator]   Add basisset `tight` for atom `Si` to basissets folder.
+[calculator]   Add basisset `tight` for atom `Sr` to basissets folder.
+[calculator]   Calculator: aims
+[calculator]   settings:
+[calculator]     xc: pbe
+[calculator]     tier: 2
+[calculator]     occupation_acc: 1e-08
+[calculator]     sc_accuracy_rho: 1e-05
+[calculator]     sc_accuracy_eev: 1e-05
+[calculator]     sc_accuracy_etot: 1e-05
+[calculator]     sc_iter_limit: 8000
+[calculator]     occupation_type: fermi 0.1
+[calculator]     spin: none
+[calculator]     charge: 0.0
+[calculator]     mixer: pulay
+[calculator]     n_max_pulay: 10
+[calculator]     charge_mix_param: 0.01
+[calculator]     preconditioner: kerker 1.5
+[calculator]     override_relativity: True
+[calculator]     override_illconditioning: True
+[calculator]     compensate_multipole_errors: .false.
+[calculator]     relativistic: atomic_zora scalar
+[calculator]     sc_accuracy_forces: 0.0001
+[calculator]     compute_forces: True
+[calculator]     compute_analytical_stress: True
+[calculator]     k_grid: [10, 7, 6]
+[calculator]     output_level: MD_light
+[calculator]     use_pimd_wrapper: ('localhost', 12347)
+[calculator]     aims_command: /home/bepdansp/vibes_test/test_run.sh
+[calculator]     species_dir: /home/bepdansp/aflow_binaries_vibes_1000_1999/pbe/tight/tier2/atomic_zora/8/Si4Sr8_ICSD_422/relaxation/basissets
+[relaxation]   filter settings:
+[relaxation]     hydrostatic_strain: False
+[relaxation]     constant_volume: False
+[relaxation]     scalar_pressure: 0.0
+[relaxation]     mask: None
+[relaxation]   driver: BFGS
+[relaxation]   settings:
+[relaxation]     type: optimization
+[relaxation]     optimizer: BFGS
+[relaxation]     maxstep: 0.2
+[socketio]     Use SocketIO with host localhost and port 12347
+[relaxation]   filter settings:
+[relaxation]     hydrostatic_strain: False
+[relaxation]     constant_volume: False
+[relaxation]     scalar_pressure: 0.0
+[relaxation]     mask: None
+[relaxation]   Start step 0
+[relaxation]   Step 0 finished.
+[relaxation]   .. residual force:  3.977 meV/AA
+[relaxation]   .. residual stress: 79.854 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 1 finished.
+[relaxation]   .. residual force:  5.124 meV/AA
+[relaxation]   .. residual stress: 142.609 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 2 finished.
+[relaxation]   .. residual force:  5.398 meV/AA
+[relaxation]   .. residual stress: 7.185 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 3 finished.
+[relaxation]   .. residual force:  4.310 meV/AA
+[relaxation]   .. residual stress: 6.521 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 4 finished.
+[relaxation]   .. residual force:  4.009 meV/AA
+[relaxation]   .. residual stress: 5.666 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 5 finished.
+[relaxation]   .. residual force:  2.929 meV/AA
+[relaxation]   .. residual stress: 2.939 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 6 finished.
+[relaxation]   .. residual force:  2.846 meV/AA
+[relaxation]   .. residual stress: 1.121 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 7 finished.
+[relaxation]   .. residual force:  2.320 meV/AA
+[relaxation]   .. residual stress: 5.489 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 8 finished.
+[relaxation]   .. residual force:  0.930 meV/AA
+[relaxation]   .. residual stress: 8.148 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 9 finished.
+[relaxation]   .. residual force:  0.972 meV/AA
+[relaxation]   .. residual stress: 4.254 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Step 10 finished.
+[relaxation]   .. residual force:  0.856 meV/AA
+[relaxation]   .. residual stress: 0.428 meV/AA**3
+[vibes]        .. Space group:     Pnma (62)
+[relaxation]   clean atoms before logging
+[relaxation]   .. log
+[relaxation]   Relaxation converged.
+[relaxation]   done.
