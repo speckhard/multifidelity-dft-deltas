@@ -63,9 +63,11 @@ python modelling/rf/rf_trainer.py \
 
 ## Datasets
 
-The training datasets (delta DFT calculations from FHI-aims and exciting sweeps over precision settings, basis-set tiers, and k-point densities) are not redistributed in this repo due to size. The `parsing/` module documents how the delta dataset is constructed from raw DFT output trees, and `parsing/output_parser_vibes.py` / `parsing/output_parser_exciting_geo_opt.py` show the fields extracted per calculation.
+The training datasets (delta DFT calculations from FHI-aims and exciting sweeps over precision settings, basis-set tiers, and k-point densities) are hosted on Hugging Face:
 
-Reach out to the authors for access to the curated `.pt` and `.csv` artifacts used in the paper experiments.
+**https://huggingface.co/datasets/dtsdts/multifidelity-dft-deltas**
+
+They aren't redistributed in this repo due to size. The `parsing/` module documents how the delta dataset is constructed from raw DFT output trees — `parsing/output_parser_vibes.py` and `parsing/output_parser_exciting_geo_opt.py` show the fields extracted per calculation, and `parsing/create_delta_dataset.py` builds the cheap–reference pairs.
 
 ## License
 
