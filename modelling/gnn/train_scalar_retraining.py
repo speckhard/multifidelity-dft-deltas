@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import copy
 import json
+import math
 import os
 import platform
 import subprocess
+import time
 from pathlib import Path
 
 import torch
@@ -104,6 +106,32 @@ def _target_weights(training, active_targets):
     return weights
 
 
+def _validate_early_stopping(training):
+    configured_patience = training.get("early_stopping_patience", None)
+    if configured_patience is None:
+        enabled = False
+        patience = None
+    else:
+        enabled = True
+        if isinstance(configured_patience, bool) or not isinstance(configured_patience, int):
+            raise ValueError("early_stopping_patience must be a positive integer")
+        if configured_patience <= 0:
+            raise ValueError("early_stopping_patience must be a positive integer")
+        patience = configured_patience
+
+    configured_min_delta = training.get("early_stopping_min_delta", 0.0)
+    if isinstance(configured_min_delta, bool) or not isinstance(configured_min_delta, (int, float)):
+        raise ValueError("early_stopping_min_delta must be finite and non-negative")
+    min_delta = float(configured_min_delta)
+    if not math.isfinite(min_delta) or min_delta < 0.0:
+        raise ValueError("early_stopping_min_delta must be finite and non-negative")
+    return {
+        "enabled": enabled,
+        "patience": patience,
+        "min_delta": min_delta,
+    }
+
+
 def _batch_loss(predictions, targets, active_targets, weights, training):
     loss_name = str(training.get("loss_function", "smape")).lower()
     epsilon = float(training.get("smape_epsilon", 1e-4))
@@ -177,6 +205,7 @@ def run_training(payload_path, output_dir, config):
         name: DataLoader(items, batch_size=batch_size, shuffle=(name == "train"))
         for name, items in splits.items()
     }
+    training_stopping = _validate_early_stopping(training)
     model_config = _model_config(config)
     encoding_dimension = payload.get("metadata", {}).get("encoding_dimension")
     if encoding_dimension is not None and int(encoding_dimension) != model_config["num_precision_settings"]:
@@ -187,6 +216,8 @@ def run_training(payload_path, output_dir, config):
     normalized_config = copy.deepcopy(config)
     normalized_config["model"] = model_config
     normalized_config.setdefault("training", {})["seed"] = seed
+    normalized_config["training"]["early_stopping_patience"] = training_stopping["patience"]
+    normalized_config["training"]["early_stopping_min_delta"] = training_stopping["min_delta"]
 
     run_name = str(training.get("run_name", "scalar_retraining")).strip()
     if not run_name or any(character in run_name for character in "/\\"):
@@ -196,7 +227,11 @@ def run_training(payload_path, output_dir, config):
         raise FileExistsError(f"run directory already exists: {run_directory}")
     run_directory.mkdir(parents=True)
     checkpoint_path = run_directory / f"{run_name}_seed{seed}_best_val_loss.pt"
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats(device)
+        torch.cuda.synchronize(device)
 
+    start_time = time.perf_counter()
     model = _make_model(normalized_config, device)
     optimizer = torch.optim.Adam(model.parameters(), lr=float(training.get("learning_rate", 1e-4)))
     target_weights = _target_weights(training, active_targets)
@@ -206,6 +241,10 @@ def run_training(payload_path, output_dir, config):
         raise ValueError("epochs and eval_interval must be positive")
 
     best = None
+    stopping_reference = None
+    remaining_patience = training_stopping["patience"] if training_stopping["enabled"] else None
+    completed_epochs = 0
+    stopped_early = False
     for epoch in range(1, epochs + 1):
         model.train()
         for batch in loaders["train"]:
@@ -217,11 +256,17 @@ def run_training(payload_path, output_dir, config):
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
+        completed_epochs = epoch
         if epoch % interval == 0 or epoch == epochs:
             validation_metrics = _evaluate(
                 model, loaders["val"], active_targets, target_weights, training, device
             )
-            criterion_value = validation_metrics["selection_loss"]
+            try:
+                criterion_value = float(validation_metrics["selection_loss"])
+            except (TypeError, ValueError, KeyError) as error:
+                raise ValueError("validation selection_loss must be finite") from error
+            if not math.isfinite(criterion_value):
+                raise ValueError("validation selection_loss must be finite")
             if best is None or criterion_value < best["value"]:
                 best = {"value": criterion_value, "epoch": epoch}
                 _atomic_torch(
@@ -238,6 +283,17 @@ def run_training(payload_path, output_dir, config):
                         "code_commit": _git_commit(),
                     },
                 )
+            if training_stopping["enabled"]:
+                if stopping_reference is None:
+                    stopping_reference = criterion_value
+                elif criterion_value < stopping_reference - training_stopping["min_delta"]:
+                    stopping_reference = criterion_value
+                    remaining_patience = training_stopping["patience"]
+                else:
+                    remaining_patience -= 1
+                if remaining_patience <= 0 and epoch < epochs:
+                    stopped_early = True
+                    break
 
     checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
     fresh_model = _make_model(checkpoint["resolved_config"], device)
@@ -252,6 +308,11 @@ def run_training(payload_path, output_dir, config):
             fresh_model, loaders["test"], active_targets, target_weights, training, device
         )
 
+    runtime_seconds = float(time.perf_counter() - start_time)
+    peak_bytes = None
+    if torch.cuda.is_available():
+        torch.cuda.synchronize(device)
+        peak_bytes = int(torch.cuda.max_memory_allocated(device))
     run_manifest = {
         "active_targets": active_targets,
         "checkpoint": str(checkpoint_path),
@@ -261,6 +322,21 @@ def run_training(payload_path, output_dir, config):
         "device": str(device),
         "platform": platform.platform(),
         "resolved_config": normalized_config,
+        "total_runtime_seconds": runtime_seconds,
+        "model_parameter_count": int(sum(p.numel() for p in model.parameters())),
+        "cuda_device_name": torch.cuda.get_device_name(device) if torch.cuda.is_available() else None,
+        "peak_allocated_cuda_bytes": peak_bytes,
+        "early_stopping": {
+            "enabled": training_stopping["enabled"],
+            "patience": training_stopping["patience"],
+            "min_delta": training_stopping["min_delta"],
+            "remaining_patience": remaining_patience,
+            "completed_epochs": completed_epochs,
+            "stopped_early": stopped_early,
+            "event_units": "validation",
+        },
+        "completed_epochs": completed_epochs,
+        "stopped_early": stopped_early,
         "selected_epoch": checkpoint["epoch"],
         "selection": checkpoint["selection"],
         "torch_version": torch.__version__,

@@ -1,4 +1,5 @@
 import json
+import math
 
 import pytest
 
@@ -72,6 +73,35 @@ def _config(run_name, evaluate_test=False):
             "seed": 1,
         },
     }
+
+
+class _DeterministicEvaluator:
+    def __init__(self, val_losses, test_losses=None):
+        self.val_losses = list(val_losses)
+        self.test_losses = list(test_losses or [])
+        self.val_calls = 0
+        self.test_calls = 0
+        self.models = []
+        self.splits = []
+
+    def __call__(self, model, loader, active_targets, weights, training, device):
+        split = getattr(loader.dataset[0], "split", "")
+        self.models.append(id(model))
+        self.splits.append(split)
+        if split == "test":
+            self.test_calls += 1
+            value = (
+                self.test_losses[self.test_calls - 1]
+                if self.test_calls <= len(self.test_losses)
+                else 0.0
+            )
+        else:
+            if self.val_calls >= len(self.val_losses):
+                value = self.val_losses[-1]
+            else:
+                value = self.val_losses[self.val_calls]
+            self.val_calls += 1
+        return {"selection_loss": value}
 
 
 def test_smape_uses_signed_values_without_magnitude_transform():
@@ -150,3 +180,160 @@ def test_unknown_target_strict_splits_and_cpu_guard():
         validate_fixed_splits([type("Graph", (), {"split": "train"})()])
     with pytest.raises(RuntimeError):
         require_device({"training": {}}, "cpu")
+
+
+def test_eval_schedule_includes_final_nondivisible_boundary(tmp_path, monkeypatch):
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    evaluator = _DeterministicEvaluator([10.0, 9.0, 8.0])
+    monkeypatch.setattr("modelling.gnn.train_scalar_retraining._evaluate", evaluator)
+
+    config = _config("boundary_eval")
+    config["training"]["epochs"] = 5
+    config["training"]["eval_interval"] = 2
+    metrics = run_training(payload_path, output_path, config)
+
+    manifest = json.loads((output_path / "boundary_eval_seed1" / "run_manifest.json").read_text())
+    assert evaluator.val_calls == 4
+    assert manifest["selected_epoch"] == 5
+    assert manifest["completed_epochs"] == 5
+    assert manifest["stopped_early"] is False
+    assert manifest["early_stopping"]["enabled"] is False
+    assert metrics["validation"]["selection_loss"] == 8.0
+
+
+def test_strict_checkpoint_updates_under_min_delta_with_cumulative_early_stop_reset(tmp_path, monkeypatch):
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    evaluator = _DeterministicEvaluator([1.0, 0.96, 0.93, 0.92])
+    monkeypatch.setattr("modelling.gnn.train_scalar_retraining._evaluate", evaluator)
+
+    config = _config("min_delta_reset")
+    config["training"]["epochs"] = 4
+    config["training"]["eval_interval"] = 1
+    config["training"]["early_stopping_patience"] = 2
+    config["training"]["early_stopping_min_delta"] = 0.05
+    metrics = run_training(payload_path, output_path, config)
+
+    manifest = json.loads((output_path / "min_delta_reset_seed1" / "run_manifest.json").read_text())
+    assert manifest["selected_epoch"] == 4
+    assert manifest["early_stopping"]["remaining_patience"] == 1
+    assert manifest["early_stopping"]["stopped_early"] is False
+    assert metrics["validation"]["selection_loss"] == 0.92
+
+    checkpoint = torch.load(manifest["checkpoint"], map_location="cpu", weights_only=False)
+    assert checkpoint["selection"]["value"] == 0.92
+    assert checkpoint["resolved_config"] == manifest["resolved_config"]
+
+
+def test_absent_early_stopping_preserves_full_completion_and_persists_runtime_metadata(tmp_path, monkeypatch):
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    evaluator = _DeterministicEvaluator([4.0, 3.0, 2.0])
+    monkeypatch.setattr("modelling.gnn.train_scalar_retraining._evaluate", evaluator)
+
+    config = _config("no_early_stop")
+    config["training"]["epochs"] = 4
+    config["training"]["eval_interval"] = 2
+    metrics = run_training(payload_path, output_path, config)
+
+    manifest_path = output_path / "no_early_stop_seed1" / "run_manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["stopped_early"] is False
+    assert manifest["completed_epochs"] == 4
+    assert manifest["early_stopping"]["enabled"] is False
+    assert math.isfinite(manifest["total_runtime_seconds"])
+    assert manifest["model_parameter_count"] > 0
+    assert "cuda_device_name" in manifest
+    assert "peak_allocated_cuda_bytes" in manifest
+
+    resolved = manifest["resolved_config"]["training"]
+    assert resolved["early_stopping_patience"] is None
+    assert resolved["early_stopping_min_delta"] == 0.0
+    assert manifest["early_stopping"]["enabled"] is False
+
+
+@pytest.mark.parametrize(
+    "bad_patience",
+    [True, 1.5, "3", float("nan"), float("inf"), 0, -1],
+)
+def test_invalid_early_stopping_patience_rejected_before_run_directory_creation(
+    tmp_path, monkeypatch, bad_patience
+):
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    config = _config("bad_patience")
+    config["training"]["early_stopping_patience"] = bad_patience
+    with pytest.raises(ValueError, match="early_stopping_patience"):
+        run_training(payload_path, output_path, config)
+    assert not (output_path / "bad_patience_seed1").exists()
+
+
+def test_nonfinite_selection_loss_rejected_and_not_saved_as_checkpoint(tmp_path, monkeypatch):
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    evaluator = _DeterministicEvaluator([float("nan"), 0.7])
+    monkeypatch.setattr("modelling.gnn.train_scalar_retraining._evaluate", evaluator)
+
+    config = _config("nonfinite_eval")
+    config["training"]["epochs"] = 2
+    config["training"]["eval_interval"] = 2
+    with pytest.raises(ValueError, match="selection_loss"):
+        run_training(payload_path, output_path, config)
+
+    run_dir = output_path / "nonfinite_eval_seed1"
+    assert run_dir.exists()
+    assert not (run_dir / "nonfinite_eval_seed1_best_val_loss.pt").exists()
+
+
+def test_early_stopping_true_stop_with_model_identity_split(tmp_path, monkeypatch):
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    evaluator = _DeterministicEvaluator([1.0, 1.0, 1.0, 1.0, 0.5])
+    monkeypatch.setattr("modelling.gnn.train_scalar_retraining._evaluate", evaluator)
+
+    config = _config("true_stop")
+    config["training"]["epochs"] = 10
+    config["training"]["eval_interval"] = 2
+    config["training"]["early_stopping_patience"] = 2
+    config["training"]["early_stopping_min_delta"] = 0.0
+    run_training(payload_path, output_path, config)
+
+    manifest = json.loads((output_path / "true_stop_seed1" / "run_manifest.json").read_text())
+    assert manifest["completed_epochs"] == 6
+    assert manifest["stopped_early"] is True
+    assert manifest["selected_epoch"] == 2
+    assert manifest["early_stopping"]["remaining_patience"] == 0
+    assert manifest["early_stopping"]["stopped_early"] is True
+    assert evaluator.val_calls >= 4
+    assert len(evaluator.models) >= 4
+    assert evaluator.models[0] == evaluator.models[1] == evaluator.models[2]
+    assert evaluator.models[-1] not in evaluator.models[:-1]
+    assert evaluator.splits[0] == "val"
+    assert evaluator.splits[1] == "val"
+    assert evaluator.splits[2] == "val"
+    assert evaluator.splits[3] == "val"
+
+
+@pytest.mark.parametrize(
+    "bad_min_delta",
+    [True, "0.1", -0.1, float("nan"), float("inf")],
+)
+def test_invalid_early_stopping_min_delta_rejected_before_run_directory_creation(
+    tmp_path, bad_min_delta
+):
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    config = _config("bad_min_delta")
+    config["training"]["early_stopping_patience"] = 2
+    config["training"]["early_stopping_min_delta"] = bad_min_delta
+    with pytest.raises(ValueError, match="early_stopping_min_delta"):
+        run_training(payload_path, output_path, config)
+    assert not (output_path / "bad_min_delta_seed1").exists()
