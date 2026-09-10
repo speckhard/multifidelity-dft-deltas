@@ -14,6 +14,7 @@ import subprocess
 from pathlib import Path
 
 import numpy as np
+from ase.formula import Formula
 
 from .fhi_precision import (
     normalize_basis_size, normalize_num_setting, precision_from_settings,
@@ -153,6 +154,24 @@ def _value(row, name, atoms):
     return getattr(row, name, None)
 
 
+def _formula_count_map(value, source_row_id, field):
+    try:
+        counts = Formula(str(value)).count()
+    except Exception as exc:
+        raise ManifestError(f"formula parse failure for {source_row_id} field {field}") from exc
+    if not counts:
+        raise ManifestError(f"formula parse failure for {source_row_id} field {field}")
+    normalized = {}
+    for element, count in counts.items():
+        if count <= 0:
+            raise ManifestError(f"formula parse failure for {source_row_id} field {field}")
+        integer_count = int(count)
+        if integer_count != count:
+            raise ManifestError(f"formula parse failure for {source_row_id} field {field}")
+        normalized[element] = integer_count
+    return normalized
+
+
 def verify_row_agreement(manifest_row, db_row, tolerance=1e-7):
     atoms = db_row.toatoms()
     checks = {"ICSD_number": "ICSD_number", "formula": "formula", "atomic_numbers": "atomic_numbers",
@@ -163,6 +182,12 @@ def verify_row_agreement(manifest_row, db_row, tolerance=1e-7):
         actual = _value(db_row, db_name, atoms)
         if manifest_name == "atomic_numbers":
             expected, actual = manifest_row["_atomic_numbers"], actual
+        elif manifest_name == "formula":
+            expected_counts = _formula_count_map(expected, manifest_row["source_row_id"], manifest_name)
+            actual_counts = _formula_count_map(actual, manifest_row["source_row_id"], manifest_name)
+            if expected_counts != actual_counts:
+                raise ManifestError(f"semantic mismatch {manifest_name} for {manifest_row['source_row_id']}")
+            continue
         if actual is None:
             raise ManifestError(f"row {manifest_row['source_row_id']} missing DB field {db_name}")
         try:
