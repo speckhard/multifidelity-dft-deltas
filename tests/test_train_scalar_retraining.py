@@ -1,5 +1,6 @@
 import json
 import math
+import subprocess
 
 import pytest
 
@@ -17,6 +18,69 @@ from modelling.gnn.train_scalar_retraining import (
     run_training,
     smape_signed_targets,
 )
+
+
+def test_commit_override_is_resolved_before_payload_and_without_git(tmp_path, monkeypatch):
+    commit = "a" * 40
+    monkeypatch.setenv("DELTA_CODE_COMMIT", commit)
+    monkeypatch.setattr(
+        "modelling.gnn.train_scalar_retraining.subprocess.check_output",
+        lambda *args, **kwargs: pytest.fail("git must not be invoked for an override"),
+    )
+    with pytest.raises(FileNotFoundError):
+        run_training(tmp_path / "missing.pt", tmp_path / "runs", _config("provenance"))
+
+
+@pytest.mark.parametrize("override", ["A" * 40, "a" * 39, "a" * 65, "a" * 40 + " ", "g" * 40])
+def test_invalid_present_commit_override_fails_closed(tmp_path, monkeypatch, override):
+    monkeypatch.setenv("DELTA_CODE_COMMIT", override)
+    monkeypatch.setattr(
+        "modelling.gnn.train_scalar_retraining.subprocess.check_output",
+        lambda *args, **kwargs: "b" * 40,
+    )
+    with pytest.raises(ValueError, match="DELTA_CODE_COMMIT"):
+        run_training(tmp_path / "missing.pt", tmp_path / "runs", _config("provenance"))
+
+
+@pytest.mark.parametrize("git_result", [None, "a" * 39 + "\n", "A" * 40 + "\n", "g" * 40 + "\n"])
+def test_invalid_or_missing_git_commit_fails_closed(tmp_path, monkeypatch, git_result):
+    monkeypatch.delenv("DELTA_CODE_COMMIT", raising=False)
+    def fake_git(*args, **kwargs):
+        if git_result is None:
+            raise subprocess.CalledProcessError(128, args[0])
+        return git_result
+    monkeypatch.setattr("modelling.gnn.train_scalar_retraining.subprocess.check_output", fake_git)
+    with pytest.raises(ValueError, match="git commit"):
+        run_training(tmp_path / "missing.pt", tmp_path / "runs", _config("provenance"))
+
+
+def test_commit_resolution_precedes_payload_load_and_run_directory_creation(tmp_path, monkeypatch):
+    monkeypatch.delenv("DELTA_CODE_COMMIT", raising=False)
+    events = []
+    monkeypatch.setattr(
+        "modelling.gnn.train_scalar_retraining.subprocess.check_output",
+        lambda *args, **kwargs: events.append("git") or ("a" * 40 + "\n"),
+    )
+    monkeypatch.setattr(
+        "modelling.gnn.train_scalar_retraining.torch.load",
+        lambda *args, **kwargs: events.append("load") or (_ for _ in ()).throw(RuntimeError("payload loaded")),
+    )
+    with pytest.raises(RuntimeError, match="payload loaded"):
+        run_training(tmp_path / "missing.pt", tmp_path / "runs", _config("provenance"))
+    assert events == ["git", "load"]
+    assert not (tmp_path / "runs" / "provenance_seed1").exists()
+
+
+def test_commit_is_identical_in_checkpoint_and_manifest(tmp_path, monkeypatch):
+    commit = "c" * 64
+    monkeypatch.setenv("DELTA_CODE_COMMIT", commit)
+    payload_path = tmp_path / "graphs.pt"
+    output_path = tmp_path / "runs"
+    _payload(payload_path)
+    run_training(payload_path, output_path, _config("provenance_saved"))
+    manifest = json.loads((output_path / "provenance_saved_seed1" / "run_manifest.json").read_text())
+    checkpoint = torch.load(manifest["checkpoint"], map_location="cpu", weights_only=False)
+    assert checkpoint["code_commit"] == manifest["code_commit"] == commit
 
 
 def _graph(split, shift=0.0):

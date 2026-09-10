@@ -7,6 +7,7 @@ import json
 import math
 import os
 import platform
+import re
 import subprocess
 import time
 from pathlib import Path
@@ -186,6 +187,7 @@ def _evaluate(model, loader, active_targets, weights, training, device):
 
 
 def run_training(payload_path, output_dir, config):
+    code_commit = _resolve_code_commit()
     training = config.get("training", config)
     active_targets = resolve_active_targets(config)
     payload_path = Path(payload_path).resolve()
@@ -280,7 +282,7 @@ def run_training(payload_path, output_dir, config):
                             "value": criterion_value,
                         },
                         "dataset_metadata": payload.get("metadata", {}),
-                        "code_commit": _git_commit(),
+                        "code_commit": code_commit,
                     },
                 )
             if training_stopping["enabled"]:
@@ -316,7 +318,7 @@ def run_training(payload_path, output_dir, config):
     run_manifest = {
         "active_targets": active_targets,
         "checkpoint": str(checkpoint_path),
-        "code_commit": _git_commit(),
+        "code_commit": code_commit,
         "dataset_metadata": payload.get("metadata", {}),
         "dataset_path": str(payload_path),
         "device": str(device),
@@ -346,12 +348,20 @@ def run_training(payload_path, output_dir, config):
     return final_metrics
 
 
-def _git_commit():
+def _resolve_code_commit():
+    override = os.environ.get("DELTA_CODE_COMMIT")
+    if "DELTA_CODE_COMMIT" in os.environ:
+        if not re.fullmatch(r"[0-9a-f]{40}(?:[0-9a-f]{24})?", override):
+            raise ValueError("DELTA_CODE_COMMIT must be lowercase hexadecimal with 40 or 64 characters")
+        return override
     try:
-        return subprocess.check_output(
+        commit = subprocess.check_output(
             ["git", "rev-parse", "HEAD"],
             cwd=Path(__file__).resolve().parents[2],
             text=True,
         ).strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise ValueError("unable to resolve git commit") from error
+    if not re.fullmatch(r"[0-9a-f]{40}(?:[0-9a-f]{24})?", commit):
+        raise ValueError("git commit must be lowercase hexadecimal with 40 or 64 characters")
+    return commit
