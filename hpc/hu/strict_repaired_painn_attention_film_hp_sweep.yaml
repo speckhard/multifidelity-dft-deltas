@@ -1,0 +1,37 @@
+program: modelling/gnn/train_pipeline.py
+entity: dtts
+project: gnn-repaired-fhi-2026
+name: strict-repaired-painn-attention-mt-${WANDB_SWEEP_ID}
+method: random
+metric:
+  name: Val/sMAPE_Scalar_Mean
+  goal: minimize
+command:
+  - ${env}
+  - ${interpreter}
+  - ${program}
+  - --config-name=strict_repaired_painn_attention_mt_config
+  - hydra.run.dir=${oc.env:WANDB_HPC_RUN_DIR}
+  - hydra.job.chdir=true
+  - ${args_no_hyphens}
+parameters:
+  model.hidden_dim:
+    values: [32, 64, 128, 256]
+  training.learning_rate:
+    values: [1e-3, 5e-4, 1e-4]
+  training.loss_function:
+    values: ["smape", "asinh_l1", "l1", "nll"]
+  training.batch_size:
+    value: 32
+  model.num_layers:
+    value: 3
+  training.eval_interval:
+    value: 5
+  training.early_stopping_patience:
+    value: 10
+  training.early_stopping_min_delta:
+    value: 1e-5
+  training.seed:
+    value: 42
+  training.evaluate_test_at_end:
+    value: false
