@@ -162,6 +162,8 @@ def test_hpc_sweep_launcher_checks_provenance_contracts():
     text = LAUNCHER.read_text(encoding="utf-8")
 
     # Enforce strict commit provenance contract.
+    assert "module load git/2.51.0" in text
+    assert text.index("module load git/2.51.0") < text.index("git_status=\"$(git status --porcelain)\"")
     assert "git_status=\"$(git status --porcelain)\"" in text
     assert "if [ \"$DELTA_CODE_COMMIT\" != \"$current_commit\" ]; then" in text
     assert "current_commit=\"$(git rev-parse --verify HEAD)\"" in text

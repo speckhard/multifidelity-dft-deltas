@@ -12,6 +12,8 @@
 
 set -euo pipefail
 
+module load git/2.51.0
+
 root="${HPC_ROOT:-/home/physik/speckhad/delta_data_gpu/retraining_2026-09-09}"
 repo="${HPC_REPO_DIR:-$root/multifidelity-dft-deltas}"
 venv="${HPC_VENV_ACTIVATE:-/home/physik/speckhad/codex_gpu_test/venv-cu126/bin/activate}"
