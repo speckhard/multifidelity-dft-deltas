@@ -27,6 +27,7 @@ if root_dir not in sys.path:
 from modelling.gnn.delta_egnn_model import DeltaGNN
 from modelling.gnn.settings_only_egnn_model import SettingsOnlyGNN
 from modelling.gnn.delta_egnn_attention_model import DeltaAttentionGNN
+from modelling.gnn.retraining_contract import validate_repaired_payload, validate_fixed_splits
 
 # --- Helpers ---
 
@@ -195,6 +196,57 @@ def plot_uncertainty_calibration(arrays, save_path):
     plt.savefig(save_path)
     plt.close()
 
+
+def _split_graphs_for_training(graphs, strict_mode):
+    if strict_mode:
+        return validate_fixed_splits(graphs)
+
+    train_graphs = [data for data in graphs if data.split == 'train']
+    val_graphs = [data for data in graphs if data.split == 'val']
+    test_graphs = [data for data in graphs if data.split == 'test']
+
+    if len(val_graphs) == 0:
+        print("WARNING: No validation data found. Fallback to split.")
+        total_train = len(train_graphs)
+        split_idx = int(total_train * 0.9)
+        val_graphs = train_graphs[split_idx:]
+        train_graphs = train_graphs[:split_idx]
+    return {
+        "train": train_graphs,
+        "val": val_graphs,
+        "test": test_graphs,
+    }
+
+
+def _prepare_training_payload_and_init(cfg: DictConfig):
+    if not os.path.exists(cfg.data_file):
+        print(f"Error: {cfg.data_file} not found.")
+        return None
+
+    print(f"Loading data from {cfg.data_file}...")
+    loaded_dict = torch.load(cfg.data_file, weights_only=False)
+    strict_repaired_data = bool(cfg.get("strict_repaired_data", False))
+    if strict_repaired_data:
+        split = validate_repaired_payload(loaded_dict, int(cfg.model.num_precision_settings))
+    else:
+        split = _split_graphs_for_training(loaded_dict["graphs"], strict_mode=False)
+
+    wandb_name = cfg.get("job_name", None)
+    if wandb_name is not None and str(wandb_name).strip() == "":
+        wandb_name = None
+
+    wandb.init(
+        project=cfg.get("wandb_project", "egnn-delta-learning"),
+        entity=cfg.get("wandb_entity", "dtts"),
+        group=cfg.get("wandb_group", None),
+        config=OmegaConf.to_container(cfg, resolve=True),
+        name=wandb_name,
+        dir=os.getcwd()
+    )
+    return split
+
+
+
 class EarlyStopping:
     def __init__(self, patience=10, min_delta=1e-5):
         self.patience = patience
@@ -275,6 +327,17 @@ class AsinhL1Loss(nn.Module):
         loss = torch.abs(torch.asinh(mean / self.scale) - torch.asinh(target / self.scale))
         return loss.mean()
 
+
+class PlainL1Loss(nn.Module):
+    """Plain signed L1 loss."""
+
+    def forward(self, preds, target, is_position=False):
+        if isinstance(preds, tuple):
+            mean = preds[0]
+        else:
+            mean = preds
+        return torch.abs(mean - target).mean()
+
 class RMSLAELossLn(nn.Module):
     """Root Mean Squared Log Absolute Error (natural log variant, legacy)."""
     def __init__(self, epsilon=1e-4):
@@ -319,6 +382,62 @@ class GaussianNLLLoss(nn.Module):
             loss = torch.exp(-log_var) * (target - mean)**2 + log_var
             return 0.5 * loss.mean()
 
+def _resolve_metric_name(requested_metric, available_metrics):
+    if requested_metric == "Val_Loss":
+        return "Val_Loss"
+    if requested_metric == "Val/Loss":
+        return "Val_Loss"
+
+    if requested_metric.startswith("Val/"):
+        requested_metric = requested_metric[len("Val/"):]
+    elif requested_metric.startswith("Train/"):
+        requested_metric = requested_metric[len("Train/"):]
+    elif requested_metric.startswith("Val_"):
+        requested_metric = requested_metric[len("Val_"):]
+    elif requested_metric.startswith("Train_"):
+        requested_metric = requested_metric[len("Train_"):]
+
+    if requested_metric in available_metrics:
+        return requested_metric
+
+    candidates = [requested_metric]
+    lowered_map = {name.lower(): name for name in available_metrics}
+    for candidate in candidates:
+        if candidate in available_metrics:
+            return candidate
+        lowered = candidate.lower()
+        if lowered in lowered_map:
+            return lowered_map[lowered]
+
+    raise ValueError(
+        f"early_stop_metric {requested_metric!r} not available. Available keys: "
+        + ", ".join(sorted(available_metrics))
+    )
+
+
+def _get_training_control(cfg):
+    return {
+        "eval_interval": int(cfg.training.get("eval_interval", 5)),
+        "early_stopping_patience": int(cfg.training.get("early_stopping_patience", 10)),
+        "early_stopping_min_delta": float(cfg.training.get("early_stopping_min_delta", 1e-5)),
+        "evaluate_test_at_end": bool(cfg.training.get("evaluate_test_at_end", False)),
+    }
+
+
+def _strict_mode_enabled(cfg):
+    return bool(cfg.get("strict_repaired_data", False))
+
+
+def _safe_smape_scalar_mean(metrics):
+    value = (
+        metrics["sMAPE_delta_energy"]
+        + metrics["sMAPE_delta_gap"]
+        + metrics["sMAPE_delta_volume"]
+    ) / 3.0
+    if not torch.isfinite(torch.tensor(value)).item():
+        return float("inf")
+    return float(value)
+
 # --- Training Logic ---
 def _get_geo_weights(weights):
     """Get separate volume and lattice weights, backward compatible with delta_geo."""
@@ -327,7 +446,7 @@ def _get_geo_weights(weights):
     return w_vol, w_lat
 
 
-def train_step(model, loader, optimizer, criterion, weights, device):
+def train_step(model, loader, optimizer, criterion, weights, device, strict_mode=False):
     model.train()
     total_loss = 0
     w_vol, w_lat = _get_geo_weights(weights)
@@ -335,25 +454,57 @@ def train_step(model, loader, optimizer, criterion, weights, device):
     for data in loader:
         data = data.to(device)
         optimizer.zero_grad()
-        target_delta_vol = data.delta_final_volume_per_atom.view(-1, 1)
-        target_delta_lat = data.delta_lattice_params.view(-1, 6)
-
         pred_delta_positions, pred_delta_energy, pred_delta_gap, pred_delta_geo = model(data)
         geo_mean, geo_logvar = pred_delta_geo
 
-        loss_delta_positions = criterion(pred_delta_positions, data.delta_relaxed_atom_positions, is_position=True)
-        loss_delta_energy = criterion(pred_delta_energy, data.delta_total_energy_per_atom, is_position=False)
-        loss_delta_gap = criterion(pred_delta_gap, data.delta_homo_lumo_gap, is_position=False)
-        loss_delta_vol = criterion(
-            (geo_mean[:, 0:1], geo_logvar[:, 0:1]), target_delta_vol, is_position=False)
-        loss_delta_lat = criterion(
-            (geo_mean[:, 1:], geo_logvar[:, 1:]), target_delta_lat, is_position=False)
+        has_positions = (
+            hasattr(data, "delta_relaxed_atom_positions")
+            and data.delta_relaxed_atom_positions is not None
+        )
+        has_lattice = (
+            hasattr(data, "delta_lattice_params")
+            and data.delta_lattice_params is not None
+        )
 
-        total_loss_item = (weights.delta_r * loss_delta_positions +
-                           weights.delta_e * loss_delta_energy +
-                           weights.delta_gap * loss_delta_gap +
-                           w_vol * loss_delta_vol +
-                           w_lat * loss_delta_lat)
+        if strict_mode:
+            loss_delta_energy = criterion(pred_delta_energy, data.delta_total_energy_per_atom, is_position=False)
+            loss_delta_gap = criterion(pred_delta_gap, data.delta_homo_lumo_gap, is_position=False)
+            target_delta_vol = data.delta_final_volume_per_atom.view(-1, 1)
+            loss_delta_vol = criterion(
+                (geo_mean[:, 0:1], geo_logvar[:, 0:1]), target_delta_vol, is_position=False)
+            total_loss_item = (weights.delta_e * loss_delta_energy +
+                               weights.delta_gap * loss_delta_gap +
+                               w_vol * loss_delta_vol)
+
+            if has_lattice:
+                target_delta_lat = data.delta_lattice_params.view(-1, 6)
+                loss_delta_lat = criterion(
+                    (geo_mean[:, 1:], geo_logvar[:, 1:]), target_delta_lat, is_position=False)
+                total_loss_item = total_loss_item + (w_lat * loss_delta_lat)
+
+            if has_positions:
+                loss_delta_positions = criterion(
+                    pred_delta_positions, data.delta_relaxed_atom_positions, is_position=True)
+                total_loss_item = total_loss_item + (weights.delta_r * loss_delta_positions)
+
+        else:
+            target_delta_vol = data.delta_final_volume_per_atom.view(-1, 1)
+            target_delta_lat = data.delta_lattice_params.view(-1, 6)
+
+            loss_delta_positions = criterion(
+                pred_delta_positions, data.delta_relaxed_atom_positions, is_position=True)
+            loss_delta_energy = criterion(pred_delta_energy, data.delta_total_energy_per_atom, is_position=False)
+            loss_delta_gap = criterion(pred_delta_gap, data.delta_homo_lumo_gap, is_position=False)
+            loss_delta_vol = criterion(
+                (geo_mean[:, 0:1], geo_logvar[:, 0:1]), target_delta_vol, is_position=False)
+            loss_delta_lat = criterion(
+                (geo_mean[:, 1:], geo_logvar[:, 1:]), target_delta_lat, is_position=False)
+
+            total_loss_item = (weights.delta_r * loss_delta_positions +
+                               weights.delta_e * loss_delta_energy +
+                               weights.delta_gap * loss_delta_gap +
+                               w_vol * loss_delta_vol +
+                               w_lat * loss_delta_lat)
 
         total_loss_item.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
@@ -362,15 +513,14 @@ def train_step(model, loader, optimizer, criterion, weights, device):
     return total_loss / len(loader.dataset)
 
 @torch.no_grad()
-def evaluate(model, loader, criterion, weights):
+def evaluate(model, loader, criterion, weights, strict_mode=False):
     model.eval()
     device = next(model.parameters()).device
     w_vol, w_lat = _get_geo_weights(weights)
-
     arrays = {
         'delta_energy': {'pred': [], 'targ': [], 'sigma': []},
         'delta_gap': {'pred': [], 'targ': [], 'sigma': []},
-        'delta_positions': {'pred': [], 'targ': [], 'sigma': []}, 
+        'delta_positions': {'pred': [], 'targ': [], 'sigma': []},
         'delta_volume': {'pred': [], 'targ': [], 'sigma': []},
         'delta_a': {'pred': [], 'targ': [], 'sigma': []},
         'delta_b': {'pred': [], 'targ': [], 'sigma': []},
@@ -382,8 +532,8 @@ def evaluate(model, loader, criterion, weights):
 
     total_mae_pos = 0.0
     total_mae_geo = 0.0
-    total_mae_geo_dims = np.zeros(7) 
-    
+    total_mae_geo_dims = np.zeros(7)
+
     total_smape_geo_dims = np.zeros(7)
     total_smape_delta_energy = 0.0
     total_smape_delta_gap = 0.0
@@ -393,104 +543,172 @@ def evaluate(model, loader, criterion, weights):
     total_rmslae_delta_energy = 0.0
     total_rmslae_delta_gap = 0.0
     total_rmslae_delta_positions = 0.0
-    
+
     total_acc_geo_dims = np.zeros(7)
     total_acc_delta_energy = 0.0
     total_acc_delta_gap = 0.0
     total_acc_delta_positions = 0.0
-    
+
     total_val_loss = 0.0
     total_atoms = 0
     total_graphs = 0
-    epsilon = 1e-7  # Strict epsilon for validation metrics (training loss uses 1e-4)
+    epsilon = 1e-7
 
     geo_keys = ["delta_volume", "delta_a", "delta_b", "delta_c", "delta_alpha", "delta_beta", "delta_gamma"]
+    strict_position_available = False
+    strict_lattice_available = False
 
     for data in loader:
         data = data.to(device)
+        batch_graphs = data.num_graphs
+        has_positions = hasattr(data, "delta_relaxed_atom_positions") and data.delta_relaxed_atom_positions is not None
+        has_lattice = hasattr(data, "delta_lattice_params") and data.delta_lattice_params is not None
+
         target_delta_vol = data.delta_final_volume_per_atom.view(-1, 1)
-        target_delta_lat = data.delta_lattice_params.view(-1, 6)
-        target_delta_geo = torch.cat([target_delta_vol, target_delta_lat], dim=1)
 
         pred_delta_positions, pred_delta_energy, pred_delta_gap, pred_delta_geo = model(data)
-        
         pos_mean, pos_logvar = pred_delta_positions
         eng_mean, eng_logvar = pred_delta_energy
         gap_mean, gap_logvar = pred_delta_gap
         geo_mean, geo_logvar = pred_delta_geo
 
-        loss_delta_positions = criterion(pred_delta_positions, data.delta_relaxed_atom_positions, is_position=True)
         loss_delta_energy = criterion(pred_delta_energy, data.delta_total_energy_per_atom, is_position=False)
         loss_delta_gap = criterion(pred_delta_gap, data.delta_homo_lumo_gap, is_position=False)
-        loss_delta_vol = criterion(
-            (geo_mean[:, 0:1], geo_logvar[:, 0:1]), target_delta_vol, is_position=False)
-        loss_delta_lat = criterion(
-            (geo_mean[:, 1:], geo_logvar[:, 1:]), target_delta_lat, is_position=False)
+        loss_delta_vol = criterion((geo_mean[:, 0:1], geo_logvar[:, 0:1]), target_delta_vol, is_position=False)
+        batch_loss = (
+            w_vol * loss_delta_vol +
+            weights.delta_e * loss_delta_energy +
+            weights.delta_gap * loss_delta_gap
+        )
 
-        batch_loss = (weights.delta_r * loss_delta_positions +
-                      weights.delta_e * loss_delta_energy +
-                      weights.delta_gap * loss_delta_gap +
-                      w_vol * loss_delta_vol +
-                      w_lat * loss_delta_lat)
-        total_val_loss += batch_loss.item() * data.num_graphs
+        if strict_mode:
+            if has_positions:
+                strict_position_available = True
+                loss_delta_positions = criterion(
+                    pred_delta_positions,
+                    data.delta_relaxed_atom_positions,
+                    is_position=True,
+                )
+                batch_loss = batch_loss + (weights.delta_r * loss_delta_positions)
 
-        # --- Metrics ---
+            if has_lattice:
+                strict_lattice_available = True
+                target_delta_lat = data.delta_lattice_params.view(-1, 6)
+                loss_delta_lat = criterion(
+                    (geo_mean[:, 1:], geo_logvar[:, 1:]),
+                    target_delta_lat,
+                    is_position=False,
+                )
+                batch_loss = batch_loss + (w_lat * loss_delta_lat)
+        else:
+            target_delta_lat = data.delta_lattice_params.view(-1, 6)
+            loss_delta_positions = criterion(
+                pred_delta_positions,
+                data.delta_relaxed_atom_positions,
+                is_position=True,
+            )
+            loss_delta_lat = criterion(
+                (geo_mean[:, 1:], geo_logvar[:, 1:]),
+                target_delta_lat,
+                is_position=False,
+            )
+            batch_loss = batch_loss + (
+                weights.delta_r * loss_delta_positions +
+                w_lat * loss_delta_lat
+            )
+
+        total_val_loss += batch_loss.item() * batch_graphs
+
         # Energy
-        arrays['delta_energy']['pred'].append(eng_mean.cpu().numpy())
-        arrays['delta_energy']['targ'].append(data.delta_total_energy_per_atom.cpu().numpy())
-        arrays['delta_energy']['sigma'].append(torch.exp(0.5 * eng_logvar).cpu().numpy())
-        
-        total_smape_delta_energy += calculate_smape(eng_mean, data.delta_total_energy_per_atom, epsilon) * data.num_graphs
-        total_rmslae_delta_energy += calculate_rmslae(eng_mean, data.delta_total_energy_per_atom) * data.num_graphs
-        total_acc_delta_energy += calculate_magnitude_accuracy(eng_mean, data.delta_total_energy_per_atom) * data.num_graphs
-        
+        arrays['delta_energy']['pred'].append(eng_mean.detach().cpu().numpy())
+        arrays['delta_energy']['targ'].append(data.delta_total_energy_per_atom.detach().cpu().numpy())
+        arrays['delta_energy']['sigma'].append(torch.exp(0.5 * eng_logvar).detach().cpu().numpy())
+        total_smape_delta_energy += calculate_smape(eng_mean, data.delta_total_energy_per_atom, epsilon) * batch_graphs
+        total_rmslae_delta_energy += calculate_rmslae(eng_mean, data.delta_total_energy_per_atom) * batch_graphs
+        total_acc_delta_energy += calculate_magnitude_accuracy(eng_mean, data.delta_total_energy_per_atom) * batch_graphs
+
         # Gap
-        arrays['delta_gap']['pred'].append(gap_mean.cpu().numpy())
-        arrays['delta_gap']['targ'].append(data.delta_homo_lumo_gap.cpu().numpy())
-        arrays['delta_gap']['sigma'].append(torch.exp(0.5 * gap_logvar).cpu().numpy())
-        
-        total_smape_delta_gap += calculate_smape(gap_mean, data.delta_homo_lumo_gap, epsilon) * data.num_graphs
-        total_rmslae_delta_gap += calculate_rmslae(gap_mean, data.delta_homo_lumo_gap) * data.num_graphs
-        total_acc_delta_gap += calculate_magnitude_accuracy(gap_mean, data.delta_homo_lumo_gap) * data.num_graphs
+        arrays['delta_gap']['pred'].append(gap_mean.detach().cpu().numpy())
+        arrays['delta_gap']['targ'].append(data.delta_homo_lumo_gap.detach().cpu().numpy())
+        arrays['delta_gap']['sigma'].append(torch.exp(0.5 * gap_logvar).detach().cpu().numpy())
+        total_smape_delta_gap += calculate_smape(gap_mean, data.delta_homo_lumo_gap, epsilon) * batch_graphs
+        total_rmslae_delta_gap += calculate_rmslae(gap_mean, data.delta_homo_lumo_gap) * batch_graphs
+        total_acc_delta_gap += calculate_magnitude_accuracy(gap_mean, data.delta_homo_lumo_gap) * batch_graphs
 
         # Positions
-        p_r_norm = torch.norm(pos_mean, dim=1) 
-        t_r_norm = torch.norm(data.delta_relaxed_atom_positions, dim=1)
-        
-        arrays['delta_positions']['pred'].append(p_r_norm.detach().cpu().numpy())
-        arrays['delta_positions']['targ'].append(t_r_norm.detach().cpu().numpy())
-        arrays['delta_positions']['sigma'].append(torch.exp(0.5 * pos_logvar).detach().cpu().numpy())
+        if (not strict_mode) or has_positions:
+            if has_positions:
+                strict_position_available = True
+            p_r_norm = torch.norm(pos_mean, dim=1)
+            if has_positions:
+                t_r_norm = torch.norm(data.delta_relaxed_atom_positions, dim=1)
+            else:
+                t_r_norm = torch.zeros_like(p_r_norm)
 
-        diff_pos = (pos_mean - data.delta_relaxed_atom_positions).cpu().numpy()
-        total_mae_pos += np.sum(np.linalg.norm(diff_pos, axis=1))
-        
-        p_flat = pos_mean.view(-1); t_flat = data.delta_relaxed_atom_positions.view(-1)
-        total_smape_delta_positions += calculate_smape(p_flat, t_flat, epsilon) * data.num_graphs
-        total_rmslae_delta_positions += calculate_rmslae(p_flat, t_flat) * data.num_graphs
-        total_acc_delta_positions += calculate_magnitude_accuracy(p_flat, t_flat) * data.num_graphs
+            arrays['delta_positions']['pred'].append(p_r_norm.detach().cpu().numpy())
+            arrays['delta_positions']['targ'].append(t_r_norm.detach().cpu().numpy())
+            arrays['delta_positions']['sigma'].append(torch.exp(0.5 * pos_logvar).detach().cpu().numpy())
+
+            if has_positions:
+                diff_pos = (pos_mean - data.delta_relaxed_atom_positions).detach().cpu().numpy()
+                total_mae_pos += np.sum(np.linalg.norm(diff_pos, axis=1))
+                p_flat = pos_mean.view(-1)
+                t_flat = data.delta_relaxed_atom_positions.view(-1)
+                total_smape_delta_positions += calculate_smape(p_flat, t_flat, epsilon) * batch_graphs
+                total_rmslae_delta_positions += calculate_rmslae(p_flat, t_flat) * batch_graphs
+                total_acc_delta_positions += calculate_magnitude_accuracy(p_flat, t_flat) * batch_graphs
 
         total_atoms += data.x.shape[0]
 
         # Geometry
-        total_mae_geo += F.l1_loss(geo_mean, target_delta_geo, reduction='sum').item()
-        diff_geo = torch.abs(geo_mean - target_delta_geo)
-        batch_geo_sum = torch.sum(diff_geo, dim=0).cpu().numpy()
-        total_mae_geo_dims += batch_geo_sum
-        
-        for i, key in enumerate(geo_keys):
-            p = geo_mean[:, i]
-            t = target_delta_geo[:, i]
-            s = torch.exp(0.5 * geo_logvar[:, i])
-            
-            total_smape_geo_dims[i] += calculate_smape(p, t, epsilon) * data.num_graphs
-            total_rmslae_geo_dims[i] += calculate_rmslae(p, t) * data.num_graphs
-            total_acc_geo_dims[i] += calculate_magnitude_accuracy(p, t) * data.num_graphs
-            
-            arrays[key]['pred'].append(p.detach().cpu().numpy())
-            arrays[key]['targ'].append(t.detach().cpu().numpy())
-            arrays[key]['sigma'].append(s.detach().cpu().numpy())
+        arrays['delta_volume']['pred'].append(geo_mean[:, 0].detach().cpu().numpy())
+        arrays['delta_volume']['targ'].append(target_delta_vol[:, 0].detach().cpu().numpy())
+        arrays['delta_volume']['sigma'].append(torch.exp(0.5 * geo_logvar[:, 0]).detach().cpu().numpy())
 
-        total_graphs += data.num_graphs
+        geo_volume_error = geo_mean[:, 0] - target_delta_vol[:, 0]
+        total_mae_geo_dims[0] += torch.sum(torch.abs(geo_volume_error)).item()
+        total_mae_geo += torch.sum(torch.abs(geo_volume_error)).item()
+        total_smape_geo_dims[0] += calculate_smape(geo_mean[:, 0], target_delta_vol[:, 0], epsilon) * batch_graphs
+        total_rmslae_geo_dims[0] += calculate_rmslae(geo_mean[:, 0], target_delta_vol[:, 0]) * batch_graphs
+        total_acc_geo_dims[0] += calculate_magnitude_accuracy(geo_mean[:, 0], target_delta_vol[:, 0]) * batch_graphs
+
+        if strict_mode:
+            if has_lattice:
+                strict_lattice_available = True
+                target_delta_lat = data.delta_lattice_params.view(-1, 6)
+                for i, key in enumerate(geo_keys[1:], start=1):
+                    p = geo_mean[:, i]
+                    t = target_delta_lat[:, i - 1]
+                    s = torch.exp(0.5 * geo_logvar[:, i])
+
+                    total_mae_geo_dims[i] += torch.sum(torch.abs(p - t)).item()
+                    total_mae_geo += torch.sum(torch.abs(p - t)).item()
+                    total_smape_geo_dims[i] += calculate_smape(p, t, epsilon) * batch_graphs
+                    total_rmslae_geo_dims[i] += calculate_rmslae(p, t) * batch_graphs
+                    total_acc_geo_dims[i] += calculate_magnitude_accuracy(p, t) * batch_graphs
+
+                    arrays[key]['pred'].append(p.detach().cpu().numpy())
+                    arrays[key]['targ'].append(t.detach().cpu().numpy())
+                    arrays[key]['sigma'].append(s.detach().cpu().numpy())
+        else:
+            target_delta_lat = data.delta_lattice_params.view(-1, 6)
+            target_delta_geo = torch.cat([target_delta_vol, target_delta_lat], dim=1)
+            for i, key in enumerate(geo_keys[1:], start=1):
+                p = geo_mean[:, i]
+                t = target_delta_geo[:, i]
+                s = torch.exp(0.5 * geo_logvar[:, i])
+
+                total_mae_geo_dims[i] += torch.sum(torch.abs(p - t)).item()
+                total_mae_geo += torch.sum(torch.abs(p - t)).item()
+                total_smape_geo_dims[i] += calculate_smape(p, t, epsilon) * batch_graphs
+                total_rmslae_geo_dims[i] += calculate_rmslae(p, t) * batch_graphs
+                total_acc_geo_dims[i] += calculate_magnitude_accuracy(p, t) * batch_graphs
+
+                arrays[key]['pred'].append(p.detach().cpu().numpy())
+                arrays[key]['targ'].append(t.detach().cpu().numpy())
+                arrays[key]['sigma'].append(s.detach().cpu().numpy())
+
+        total_graphs += batch_graphs
 
     metrics = {}
     metrics["Val_Loss"] = total_val_loss / total_graphs
@@ -505,9 +723,9 @@ def evaluate(model, loader, criterion, weights):
             arrays[k]['targ'] = np.array([])
             arrays[k]['sigma'] = np.array([])
 
-    # Guard against NaN predictions (training instability at high LR).
-    # Return inf metrics so early stopping triggers gracefully.
-    has_nan = any(np.any(np.isnan(arrays[k]['pred'])) for k in arrays if len(arrays[k]['pred']) > 0)
+    has_nan = any(
+        np.any(np.isnan(arrays[k]['pred'])) for k in arrays if len(arrays[k]['pred']) > 0
+    )
     if has_nan:
         inf = float('inf')
         metrics["Val_Loss"] = inf
@@ -515,11 +733,12 @@ def evaluate(model, loader, criterion, weights):
         metrics["MAE_delta_gap"] = inf
         metrics["MAE_delta_positions"] = inf
         metrics["MAE_delta_geo_total"] = inf
+        metrics["sMAPE_scalar_mean"] = inf
+        metrics["sMAPE_Scalar_Mean"] = inf
         for suffix in ["delta_energy", "delta_gap", "delta_positions"]:
             metrics[f"sMAPE_{suffix}"] = inf
             metrics[f"RMSLAE_{suffix}"] = inf
             metrics[f"MagAcc_{suffix}"] = 0.0
-        geo_keys = ["delta_volume", "delta_a", "delta_b", "delta_c", "delta_alpha", "delta_beta", "delta_gamma"]
         for key in geo_keys:
             metrics[f"MAE_{key}"] = inf
             metrics[f"sMAPE_{key}"] = inf
@@ -527,41 +746,51 @@ def evaluate(model, loader, criterion, weights):
             metrics[f"MagAcc_{key}"] = 0.0
         return metrics, arrays
 
-    if len(arrays['delta_energy']['pred']) > 0:
-        metrics["MAE_delta_energy"] = mae_score(arrays['delta_energy']['targ'], arrays['delta_energy']['pred'])
-        metrics["MAE_delta_gap"] = mae_score(arrays['delta_gap']['targ'], arrays['delta_gap']['pred'])
-    else:
-        metrics["MAE_delta_energy"] = 0.0
-        metrics["MAE_delta_gap"] = 0.0
+    metrics["MAE_delta_energy"] = mae_score(arrays['delta_energy']['targ'], arrays['delta_energy']['pred'])
+    metrics["MAE_delta_gap"] = mae_score(arrays['delta_gap']['targ'], arrays['delta_gap']['pred'])
 
-    metrics["MAE_delta_positions"] = total_mae_pos / total_atoms if total_atoms > 0 else 0.0
+    if strict_mode and not strict_position_available:
+        metrics["MAE_delta_positions"] = float('inf')
+    else:
+        metrics["MAE_delta_positions"] = total_mae_pos / total_atoms if total_atoms > 0 else 0.0
+
     metrics["MAE_delta_geo_total"] = total_mae_geo / total_graphs if total_graphs > 0 else 0.0
 
     div = total_graphs if total_graphs > 0 else 1.0
-    
     metrics["sMAPE_delta_energy"] = total_smape_delta_energy / div
     metrics["RMSLAE_delta_energy"] = total_rmslae_delta_energy / div
     metrics["MagAcc_delta_energy"] = total_acc_delta_energy / div
-    
     metrics["sMAPE_delta_gap"] = total_smape_delta_gap / div
     metrics["RMSLAE_delta_gap"] = total_rmslae_delta_gap / div
     metrics["MagAcc_delta_gap"] = total_acc_delta_gap / div
-    
-    metrics["sMAPE_delta_positions"] = total_smape_delta_positions / div
-    metrics["RMSLAE_delta_positions"] = total_rmslae_delta_positions / div
-    metrics["MagAcc_delta_positions"] = total_acc_delta_positions / div
-    
+
+    if strict_mode and not strict_position_available:
+        metrics["sMAPE_delta_positions"] = float('inf')
+        metrics["RMSLAE_delta_positions"] = float('inf')
+        metrics["MagAcc_delta_positions"] = 0.0
+    else:
+        metrics["sMAPE_delta_positions"] = total_smape_delta_positions / div
+        metrics["RMSLAE_delta_positions"] = total_rmslae_delta_positions / div
+        metrics["MagAcc_delta_positions"] = total_acc_delta_positions / div
+
     geo_mae_avg = total_mae_geo_dims / div
     geo_smape_avg = total_smape_geo_dims / div
     geo_rmslae_avg = total_rmslae_geo_dims / div
     geo_acc_avg = total_acc_geo_dims / div
-
     for i, key in enumerate(geo_keys):
-        metrics[f"MAE_{key}"] = geo_mae_avg[i]
-        metrics[f"sMAPE_{key}"] = geo_smape_avg[i]
-        metrics[f"RMSLAE_{key}"] = geo_rmslae_avg[i]
-        metrics[f"MagAcc_{key}"] = geo_acc_avg[i]
-        
+        if strict_mode and key != "delta_volume" and not strict_lattice_available:
+            metrics[f"MAE_{key}"] = float('inf')
+            metrics[f"sMAPE_{key}"] = float('inf')
+            metrics[f"RMSLAE_{key}"] = float('inf')
+            metrics[f"MagAcc_{key}"] = 0.0
+        else:
+            metrics[f"MAE_{key}"] = geo_mae_avg[i]
+            metrics[f"sMAPE_{key}"] = geo_smape_avg[i]
+            metrics[f"RMSLAE_{key}"] = geo_rmslae_avg[i]
+            metrics[f"MagAcc_{key}"] = geo_acc_avg[i]
+
+    metrics["sMAPE_scalar_mean"] = _safe_smape_scalar_mean(metrics)
+    metrics["sMAPE_Scalar_Mean"] = metrics["sMAPE_scalar_mean"]
     return metrics, arrays
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
@@ -569,7 +798,7 @@ def main(cfg: DictConfig):
     print(OmegaConf.to_yaml(cfg))
 
     # Seed for reproducibility
-    seed = cfg.get("seed", None)
+    seed = cfg.training.get("seed", cfg.get("seed", None))
     if seed is not None:
         torch.manual_seed(seed)
         np.random.seed(seed)
@@ -580,21 +809,12 @@ def main(cfg: DictConfig):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
 
-    wandb.init(
-        project=cfg.get("wandb_project", "egnn-delta-learning"),
-        group=cfg.get("wandb_group", None),
-        config=OmegaConf.to_container(cfg, resolve=True),
-        name=cfg.job_name,
-        dir=os.getcwd()
-    )
-
-    if not os.path.exists(cfg.data_file):
-        print(f"Error: {cfg.data_file} not found.")
+    split = _prepare_training_payload_and_init(cfg)
+    if split is None:
         return
-
-    print(f"Loading data from {cfg.data_file}...")
-    loaded_dict = torch.load(cfg.data_file, weights_only=False)
-    all_graphs = loaded_dict['graphs']
+    train_graphs = split["train"]
+    val_graphs = split["val"]
+    test_graphs = split["test"]
 
     loss_type = cfg.training.get("loss_function", "nll").lower()
     print(f"--- CONFIGURING LOSS FUNCTION: {loss_type.upper()} ---")
@@ -608,6 +828,9 @@ def main(cfg: DictConfig):
     elif loss_type == "nll":
         criterion = GaussianNLLLoss()
         loss_label = "NLL"
+    elif loss_type == "l1":
+        criterion = PlainL1Loss()
+        loss_label = "L1"
     elif loss_type == "asinh_l1":
         criterion = AsinhL1Loss(scale=asinh_scale)
         loss_label = "AsinhL1"
@@ -620,18 +843,7 @@ def main(cfg: DictConfig):
     else:
         raise ValueError(f"Unknown loss function: {loss_type}")
 
-    train_graphs = [data for data in all_graphs if data.split == 'train']
-    val_graphs   = [data for data in all_graphs if data.split == 'val']
-    test_graphs  = [data for data in all_graphs if data.split == 'test']
-
     print(f"Dataset Split: Train={len(train_graphs)}, Val={len(val_graphs)}, Test={len(test_graphs)}")
-
-    if len(val_graphs) == 0:
-        print("WARNING: No validation data found. Fallback to split.")
-        total_train = len(train_graphs)
-        split_idx = int(total_train * 0.9)
-        val_graphs = train_graphs[split_idx:]
-        train_graphs = train_graphs[:split_idx]
 
     # Learning curve support: subsample training data
     train_fraction = cfg.training.get("train_fraction", 1.0)
@@ -647,7 +859,12 @@ def main(cfg: DictConfig):
 
     train_loader = DataLoader(train_graphs, batch_size=cfg.training.batch_size, shuffle=True)
     val_loader   = DataLoader(val_graphs, batch_size=cfg.training.batch_size, shuffle=False)
-    test_loader  = DataLoader(test_graphs, batch_size=cfg.training.batch_size, shuffle=False)
+    strict_mode = _strict_mode_enabled(cfg)
+    control = _get_training_control(cfg)
+    eval_interval = control["eval_interval"]
+    early_stopping_patience = control["early_stopping_patience"]
+    early_stopping_min_delta = control["early_stopping_min_delta"]
+    evaluate_test_at_end = control["evaluate_test_at_end"]
 
     model_type = cfg.get("model_type", "delta")
 
@@ -741,6 +958,7 @@ def main(cfg: DictConfig):
         # sMAPE
         "sMAPE_delta_energy", "sMAPE_delta_gap", "sMAPE_delta_positions",
         "sMAPE_delta_volume",
+        "sMAPE_scalar_mean",
         # MagAcc
         "MagAcc_delta_energy", "MagAcc_delta_gap", "MagAcc_delta_positions",
         "MagAcc_delta_volume",
@@ -755,28 +973,57 @@ def main(cfg: DictConfig):
         history[f'Val_{m}'] = []
     history['Train_Loss'] = [] 
     history['Val_Loss'] = []   
+    available_metric_keys = set(metrics_names)
+    available_metric_keys.add("Val_Loss")
 
     early_stop_metric = cfg.training.get("early_stop_metric", "Val_Loss")
+    resolved_early_stop_metric = _resolve_metric_name(
+        early_stop_metric, available_metric_keys
+    )
     print(f"Early stopping metric: {early_stop_metric}")
 
     best_val_loss = float('inf')
     best_val_mae_e = float('inf')
     best_val_smape_e = float('inf')
     best_val_target_smape = float('inf')     
+    best_checkpoint_path = None
 
-    early_stopper = EarlyStopping(patience=10, min_delta=1e-5)
+    early_stopper = EarlyStopping(
+        patience=early_stopping_patience,
+        min_delta=early_stopping_min_delta,
+    )
 
     print(f"{'Epoch':>5} | {'Step_Loss':>9} | {'Val_Loss':>9} | {'Val_MAE_E':>9} | {'Val_sMAPE_E':>12}")
     print("-" * 155)
 
     for epoch in range(1, cfg.training.epochs + 1):
-        train_step_loss = train_step(model, train_loader, optimizer, criterion, cfg.weights, device)
+        train_step_loss = train_step(
+            model,
+            train_loader,
+            optimizer,
+            criterion,
+            cfg.weights,
+            device,
+            strict_mode=strict_mode,
+        )
         history['train_loss'].append(train_step_loss)
         scheduler.step()
 
-        if epoch % 5 == 0 or epoch == 1 or epoch == cfg.training.epochs:
-            val_m, val_arrays = evaluate(model, val_loader, criterion, cfg.weights)
-            train_m, _ = evaluate(model, train_loader, criterion, cfg.weights)
+        if epoch % eval_interval == 0 or epoch == 1 or epoch == cfg.training.epochs:
+            val_m, val_arrays = evaluate(
+                model,
+                val_loader,
+                criterion,
+                cfg.weights,
+                strict_mode=strict_mode,
+            )
+            train_m, _ = evaluate(
+                model,
+                train_loader,
+                criterion,
+                cfg.weights,
+                strict_mode=strict_mode,
+            )
             
             current_val_loss = val_m['Val_Loss']
             
@@ -840,6 +1087,9 @@ def main(cfg: DictConfig):
                 log_dict[f"Train/Geo/MagAcc/{key}"] = train_m[f"MagAcc_{key}"]
                 log_dict[f"Val/Geo/MagAcc/{key}"] = val_m[f"MagAcc_{key}"]
 
+            log_dict["Train/sMAPE_Scalar_Mean"] = train_m["sMAPE_Scalar_Mean"]
+            log_dict["Val/sMAPE_Scalar_Mean"] = val_m["sMAPE_Scalar_Mean"]
+
             wandb.log(log_dict, step=epoch)
 
             # --- Checkpointing ---
@@ -853,10 +1103,11 @@ def main(cfg: DictConfig):
                 torch.save(model.state_dict(), 'best_smape_model.pth')
                 wandb.save('best_smape_model.pth')
 
-            if val_m[early_stop_metric] < best_val_target_smape:
-                best_val_target_smape = val_m[early_stop_metric]
+            if val_m[resolved_early_stop_metric] < best_val_target_smape:
+                best_val_target_smape = val_m[resolved_early_stop_metric]
                 torch.save(model.state_dict(), 'best_target_smape_model.pth')
                 wandb.save('best_target_smape_model.pth')
+                best_checkpoint_path = "best_target_smape_model.pth"
 
             if current_val_loss < best_val_loss:
                 best_val_loss = current_val_loss
@@ -878,13 +1129,40 @@ def main(cfg: DictConfig):
             wandb.save("training_history.pkl")
         
             # Early Stopping (Monitors configurable target sMAPE)
-            early_stopper(val_m[early_stop_metric])
+            early_stopper(val_m[resolved_early_stop_metric])
             
             if early_stopper.early_stop:
                 print(f"Early stopping triggered at epoch {epoch}!")
                 break
 
     log_element_embeddings(model)
+    if evaluate_test_at_end:
+        selected_checkpoint = best_checkpoint_path or None
+        if selected_checkpoint is None:
+            print("No checkpoint selected; using final model for test evaluation.")
+            selected_checkpoint = "last_model.pth"
+        state_dict = torch.load(selected_checkpoint, map_location=device)
+        model.load_state_dict(state_dict)
+        test_loader = DataLoader(test_graphs, batch_size=cfg.training.batch_size, shuffle=False)
+        test_m, _ = evaluate(
+            model,
+            test_loader,
+            criterion,
+            cfg.weights,
+            strict_mode=strict_mode,
+        )
+        wandb.log({
+            "Test/MAE_Energy": test_m["MAE_delta_energy"],
+            "Test/MAE_Gap": test_m["MAE_delta_gap"],
+            "Test/MAE_Volume": test_m["MAE_delta_volume"],
+            "Test/sMAPE_Energy": test_m["sMAPE_delta_energy"],
+            "Test/sMAPE_Gap": test_m["sMAPE_delta_gap"],
+            "Test/sMAPE_Volume": test_m["sMAPE_delta_volume"],
+            "Test/sMAPE_Scalar_Mean": test_m["sMAPE_Scalar_Mean"],
+            "Test/RMSLAE_Energy": test_m["RMSLAE_delta_energy"],
+            "Test/MagAcc_Energy": test_m["MagAcc_delta_energy"],
+            "Test/Loss": test_m["Val_Loss"],
+        })
     wandb.finish()
 
 if __name__ == "__main__":
