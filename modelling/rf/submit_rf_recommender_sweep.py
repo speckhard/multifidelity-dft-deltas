@@ -3,9 +3,12 @@
 Trains sklearn RandomForestRegressor across 3 feature sets × 3 targets × 4 losses = 36 jobs.
 
 Feature sets:
-  - full:    All ~102 numeric features (baseline, same as existing RF sweep)
-  - precalc: ~80 features (drop DFT energy components + initial geometry)
-  - minimal: ~50 features (elemental properties + precision settings only)
+  - full:    102 features in the maintained FHI schema
+  - precalc: 89 features (remove compound DFT energy outputs + relaxed volume)
+  - minimal: 57 features (also remove elemental-solid descriptors + deltas)
+
+Input crystal geometry is retained in all three sets. Counts depend on the
+input CSV schema; see feature_contracts.py and README.md for exact columns.
 
 Usage:
     python submit_rf_recommender_sweep.py
