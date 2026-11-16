@@ -44,6 +44,15 @@ def main(argv):
     calculate_smape = cfg.calculate_smape
     calculate_mag_acc = cfg.calculate_mag_acc
 
+    # Configs without feature ablations (e.g. exciting) support full only.
+    feature_sets = getattr(cfg, 'FEATURE_SETS', {'full': {}})
+    if FLAGS.feature_set not in feature_sets:
+        raise ValueError(
+            f"Feature set {FLAGS.feature_set!r} is not supported by "
+            f"{FLAGS.config_module}; choose from {sorted(feature_sets)}"
+        )
+    feature_cfg = feature_sets[FLAGS.feature_set]
+
     os.makedirs(FLAGS.output_dir, exist_ok=True)
     target_cols = TARGET_GROUPS[FLAGS.target_key]
     scorer = SCORERS[FLAGS.metric_key]
@@ -52,10 +61,16 @@ def main(argv):
     print(f"Config module: {FLAGS.config_module}")
     print(f"Target: {FLAGS.target_key} {target_cols}")
     print(f"Metric: {FLAGS.metric_key}")
+    print(f"Feature set: {FLAGS.feature_set}")
 
     # 2. Load Data (pass the config's drop list in explicitly — loader
     #    itself is config-agnostic now).
-    df, X = load_and_clean_data(FLAGS.data_file, drop_cols=COLS_TO_DROP_EXPLICIT)
+    df, X = load_and_clean_data(
+        FLAGS.data_file,
+        drop_cols=COLS_TO_DROP_EXPLICIT,
+        extra_drops=feature_cfg.get('extra_drops', []),
+        drop_monomer=feature_cfg.get('drop_monomer', False),
+    )
     X_train, y_train, X_test, y_test = get_train_test_split(df, X, target_cols)
     
     # 3. Define Estimator

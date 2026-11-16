@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-def load_and_clean_data(csv_path, drop_cols=None):
+def load_and_clean_data(csv_path, drop_cols=None, *, extra_drops=None, drop_monomer=False):
     """Read a delta-learning CSV and return (df, X).
 
     Args:
@@ -13,6 +13,8 @@ def load_and_clean_data(csv_path, drop_cols=None):
             config-agnostic so multiple RF configs (aims, exciting, ...)
             can share it. Default `None` = drop nothing beyond the
             `delta_*` set below.
+        extra_drops: feature-set-specific columns supplied by the config.
+        drop_monomer: remove every monomer-derived column, including deltas.
 
     Returns:
         df: the raw DataFrame (still has `split` + target cols).
@@ -35,11 +37,14 @@ def load_and_clean_data(csv_path, drop_cols=None):
 
     # 2. Feature selection (X).
     features_to_drop = list(drop_cols) if drop_cols else []
+    features_to_drop.extend(extra_drops or [])
 
     # Always drop `delta_*` except `delta_monomer_*` — target leakage
     # prevention is a non-negotiable invariant of the loader.
     for col in df.columns:
         if col.startswith('delta_') and 'monomer' not in col:
+            features_to_drop.append(col)
+        if drop_monomer and 'monomer' in col:
             features_to_drop.append(col)
 
     X_raw = df.drop(columns=features_to_drop, errors='ignore')

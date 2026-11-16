@@ -23,7 +23,8 @@ COLS_TO_DROP_EXPLICIT = [
 # Note: original_volume, original_*_len, original_*_angle are from the input
 # crystal structure (ICSD) and ARE available pre-calculation — do NOT drop them.
 COLS_DFT_INITIAL = [
-    # 13 energy components from cheap DFT
+    # 12 energy components in the maintained 102-feature schema, plus the
+    # legacy electronic_free_energy column if supplied by another CSV.
     'total_energy', 'aims_free_energy', 'sum_eigenvalues',
     'xc_energy_correction', 'xc_potential_correction',
     'free_atom_electrostatic_energy', 'hartree_energy_correction',

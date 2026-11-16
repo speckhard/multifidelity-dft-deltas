@@ -51,7 +51,12 @@ python -m modelling.gnn.train_pipeline \
     +wandb_group=my_sweep
 ```
 
-Random-forest baselines use absl flags:
+Random-forest baselines use absl flags.
+
+The FHI-aims feature ablations are **RF-Full (102)**, **RF-PreCalc (89)**,
+and **RF-Minimal (57)** for the maintained input schema. Select them with
+`--feature_set=full|precalc|minimal`; see the [RF guide](modelling/rf/README.md)
+for the feature breakdown, exact column lists, and schema caveats.
 
 ```bash
 python modelling/rf/rf_trainer.py \
